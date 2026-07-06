@@ -3,56 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Veerzone Stream Overlay</title>
+  <title>Veerzone Bottom Overlay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="overlay-shell">
-    <section class="top-left hud-card brand-card">
-      <div class="brand-row">
-        <div class="v-badge">V</div>
-        <div>
-          <div class="brand-name">VEERZONE</div>
-          <div class="brand-tagline">BGMI COMPETITIVE ARENA</div>
+  <main class="overlay-stage" aria-label="Veerzone stream bottom overlay">
+    <section class="premium-bottom-bar">
+      <div class="badge-wrap" aria-hidden="true">
+        <div class="side-hex"></div>
+        <div class="v-badge">
+          <span class="v-mark">V</span>
+          <span class="gem"></span>
         </div>
       </div>
-      <div class="status-pill"><span class="live-dot"></span><span id="statusText">REGISTRATION LIVE</span></div>
-    </section>
 
-    <section class="top-right hud-card match-card">
-      <div class="eyebrow">TONIGHT BATTLE</div>
-      <h1 id="matchTitle">BO2 SCRIMS</h1>
-      <div class="match-grid">
-        <div><span>START</span><strong id="startTime">10:30 PM</strong></div>
-        <div><span>SLOTS</span><strong id="slotsLeft">3 LEFT</strong></div>
+      <div class="bar-body">
+        <div class="neon-track top-track"></div>
+        <div class="neon-track bottom-track"></div>
+
+        <div class="left-group">
+          <span class="live-dot"></span>
+          <span class="mode-text" id="modeText">MATCH LIVE</span>
+        </div>
+
+        <div class="divider-line"></div>
+
+        <div class="site-text" id="siteText">VEERZONE.COM</div>
+
+        <div class="right-caps" aria-hidden="true"><span></span><span></span><span></span></div>
       </div>
-    </section>
-
-    <section class="center-panel hud-card">
-      <div class="hex-orbit"><span></span><span></span><span></span></div>
-      <div class="center-copy">
-        <div class="small-chip">FREE ENTRY ONLY</div>
-        <h2 id="mainMessage">BOOK YOUR SLOT</h2>
-        <p id="subMessage">Verified players only • leaderboard every battle</p>
-      </div>
-    </section>
-
-    <section class="bottom-left hud-card rewards-card">
-      <div class="eyebrow">REWARDS</div>
-      <div class="reward-total" id="rewardTotal">₹600</div>
-      <div class="reward-lines">
-        <span id="winnerReward">Winner ₹350</span>
-        <span id="runnerReward">Runner ₹150</span>
-        <span id="fragReward">Top Fraggers Rewards</span>
-      </div>
-    </section>
-
-    <section class="bottom-right cta-card">
-      <div class="cta-text" id="ctaText">REGISTER NOW — IT'S FREE</div>
-      <div class="site" id="siteUrl">veerzone.com</div>
     </section>
   </main>
 
