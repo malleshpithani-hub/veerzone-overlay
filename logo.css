@@ -1,0 +1,215 @@
+:root {
+  --violet: #7b2eff;
+  --violet-2: #a640ff;
+  --cyan: #00f0ff;
+  --blue: #2d85ff;
+  --white: #f8fbff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+body {
+  font-family: 'Orbitron', system-ui, sans-serif;
+}
+
+.logo-stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background: transparent;
+}
+
+.logo-anchor {
+  --logo-size: clamp(110px, 14vw, 210px);
+  position: absolute;
+  left: var(--logo-left, 42px);
+  bottom: var(--logo-bottom, 42px);
+  width: calc(var(--logo-size) * 1.35);
+  height: calc(var(--logo-size) * 1.55);
+  display: grid;
+  place-items: center;
+  transform: scale(var(--logo-scale, 1));
+  transform-origin: center;
+  filter:
+    drop-shadow(0 0 18px rgba(123, 46, 255, 0.72))
+    drop-shadow(0 0 24px rgba(0, 240, 255, 0.34));
+}
+
+.aura {
+  position: absolute;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  border-radius: 50%;
+  opacity: 0.58;
+  filter: blur(16px);
+}
+
+.aura-one {
+  background: radial-gradient(circle, rgba(123, 46, 255, 0.75), transparent 65%);
+  animation: auraPulse 2.8s ease-in-out infinite;
+}
+
+.aura-two {
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.55), transparent 62%);
+  animation: auraPulse 3.4s ease-in-out infinite reverse;
+}
+
+.hex-ring {
+  position: absolute;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%);
+  background: linear-gradient(135deg, var(--violet), var(--cyan));
+  opacity: 0.9;
+}
+
+.hex-ring::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  clip-path: inherit;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ring-one {
+  animation: slowSpin 9s linear infinite;
+  box-shadow: 0 0 24px rgba(123, 46, 255, 0.86), 0 0 22px rgba(0, 240, 255, 0.5);
+}
+
+.ring-two {
+  width: calc(var(--logo-size) * 1.16);
+  height: calc(var(--logo-size) * 1.16);
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.65), rgba(123, 46, 255, 0.55));
+  opacity: 0.38;
+  animation: slowSpinReverse 12s linear infinite;
+}
+
+.logo-core {
+  position: relative;
+  width: calc(var(--logo-size) * 0.82);
+  height: calc(var(--logo-size) * 0.82);
+  display: grid;
+  place-items: center;
+  clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+  background: linear-gradient(145deg, rgba(123, 46, 255, 1), rgba(0, 240, 255, 1));
+  animation: logoFloat 3.8s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.logo-core::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  clip-path: inherit;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255,255,255,0.15), transparent 18%),
+    linear-gradient(160deg, rgba(9, 13, 31, 0.98), rgba(2, 5, 14, 0.98));
+  box-shadow: inset 0 0 24px rgba(0, 240, 255, 0.12), inset 0 0 26px rgba(123, 46, 255, 0.20);
+}
+
+.logo-v {
+  position: relative;
+  z-index: 2;
+  font-size: calc(var(--logo-size) * 0.47);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.13em;
+  transform: translateX(-0.04em) scaleY(1.14);
+  background: linear-gradient(140deg, #c762ff 8%, var(--violet) 34%, #26dfff 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.logo-gem {
+  position: absolute;
+  z-index: 3;
+  top: 17%;
+  left: 50%;
+  width: calc(var(--logo-size) * 0.075);
+  height: calc(var(--logo-size) * 0.18);
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 100% 45%, 50% 100%, 0 45%);
+  background: linear-gradient(180deg, #ecffff, var(--cyan) 44%, var(--blue));
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.85);
+  animation: gemFlash 2.2s ease-in-out infinite;
+}
+
+.logo-shine {
+  position: absolute;
+  z-index: 4;
+  inset: -20% auto -20% -34%;
+  width: 26%;
+  transform: skewX(-28deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+  filter: blur(1px);
+  animation: shineSweep 3.6s ease-in-out infinite;
+}
+
+.brand-word {
+  position: absolute;
+  top: calc(50% + (var(--logo-size) * 0.48));
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(248, 251, 255, 0.92);
+  font-size: calc(var(--logo-size) * 0.105);
+  font-weight: 800;
+  letter-spacing: 0.34em;
+  text-shadow: 0 0 14px rgba(0, 240, 255, 0.4);
+  opacity: var(--word-opacity, 1);
+  white-space: nowrap;
+}
+
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slowSpinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.025); }
+}
+
+@keyframes auraPulse {
+  0%, 100% { transform: scale(0.88); opacity: 0.42; }
+  50% { transform: scale(1.16); opacity: 0.72; }
+}
+
+@keyframes gemFlash {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.55); }
+}
+
+@keyframes shineSweep {
+  0%, 16% { left: -34%; opacity: 0; }
+  26% { opacity: 0.9; }
+  46% { left: 110%; opacity: 0; }
+  100% { left: 110%; opacity: 0; }
+}
+
+@media (max-width: 720px), (max-height: 520px) {
+  .logo-anchor {
+    --logo-size: clamp(92px, 20vw, 140px);
+    left: var(--logo-left, 24px);
+    bottom: var(--logo-bottom, 24px);
+  }
+}
