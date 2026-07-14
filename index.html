@@ -1,301 +1,534 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<title>Veerzone Premium Stream Overlay</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Oxanium:wght@600;700;800&display=swap" rel="stylesheet" />
-<style>
-:root{
-  --violet:#a855f7;
-  --violet-2:#6d39f2;
-  --cyan:#22d3ee;
-  --blue:#2f73ff;
-  --white:#f8fbff;
-  --muted:#aebbd0;
-  --deep:#030611;
-  --panel:#07101f;
-  --panel-2:#0a1526;
-}
-*{box-sizing:border-box}
-html,body{width:100%;height:100%;margin:0;overflow:hidden;background:transparent!important}
-body{font-family:"Inter",Arial,sans-serif;color:var(--white);pointer-events:none}
-.stage{position:fixed;inset:0;overflow:hidden;background:transparent;isolation:isolate}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Veerzone Premium Stream Overlay</title>
+  <style>
+    :root {
+      --violet: #a855f7;
+      --violet-bright: #c778ff;
+      --cyan: #22d3ee;
+      --cyan-bright: #79efff;
+      --red: #ff3b64;
+      --white: #f7faff;
+      --muted: #8fa0b9;
+      --panel: rgba(4, 9, 20, 0.94);
+      --panel-soft: rgba(10, 19, 34, 0.9);
+    }
 
-.overlay{
-  position:absolute;
-  left:0;right:0;bottom:0;
-  height:230px;
-  z-index:4;
-}
+    * { box-sizing: border-box; }
 
-.ambient{
-  position:absolute;left:0;right:0;bottom:-34px;height:290px;
-  background:
-    radial-gradient(ellipse at 15% 100%,rgba(124,58,237,.22),transparent 46%),
-    radial-gradient(ellipse at 85% 100%,rgba(34,211,238,.18),transparent 46%);
-  filter:blur(18px);opacity:.86;
-}
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: transparent !important;
+    }
 
-.base{
-  position:absolute;left:0;right:0;bottom:0;height:150px;
-  background:
-    linear-gradient(90deg,rgba(168,85,247,.075),transparent 27%,transparent 73%,rgba(34,211,238,.075)),
-    linear-gradient(180deg,rgba(11,18,35,.99),rgba(3,7,16,.997));
-  border-top:1px solid rgba(255,255,255,.08);
-  box-shadow:0 -16px 44px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.025);
-}
-.base::before{
-  content:"";position:absolute;left:0;right:0;top:-2px;height:2px;
-  background:linear-gradient(90deg,var(--violet),rgba(168,85,247,.34) 38%,rgba(34,211,238,.36) 62%,var(--cyan));
-  box-shadow:0 0 10px rgba(168,85,247,.4),0 0 12px rgba(34,211,238,.32);
-}
-.base::after{
-  content:"";position:absolute;inset:12px 0 0;opacity:.075;
-  background-image:
-    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-  background-size:42px 42px;
-  mask-image:linear-gradient(90deg,#000,transparent 34%,transparent 66%,#000);
-}
+    body {
+      color: var(--white);
+      font-family: "Segoe UI", Inter, Arial, sans-serif;
+      pointer-events: none;
+      -webkit-font-smoothing: antialiased;
+    }
 
-.rail{
-  position:absolute;left:0;right:0;bottom:0;height:150px;z-index:5;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(460px,600px) minmax(0,1fr);
-  align-items:stretch;
-}
-.zone{position:relative;min-width:0;display:flex;align-items:center}
-.left-zone{padding:18px 38px 18px 34px}
-.right-zone{justify-content:flex-end;padding:18px 34px 18px 38px}
-.left-zone::after,.right-zone::before{
-  content:"";position:absolute;top:22px;bottom:20px;width:1px;
-  background:linear-gradient(180deg,transparent,rgba(255,255,255,.16),transparent);
-}
-.left-zone::after{right:18px}.right-zone::before{left:18px}
+    .stage {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: transparent;
+      isolation: isolate;
+    }
 
-.socials{
-  width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch;
-}
-.social{
-  position:relative;min-width:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  min-height:92px;padding:11px 9px 10px;border-radius:15px;
-  background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.017));
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 8px 25px rgba(0,0,0,.15);
-  overflow:hidden;
-  animation:socialFloat 5.2s ease-in-out infinite;
-}
-.social:nth-child(2){animation-delay:.35s}.social:nth-child(3){animation-delay:.7s}
-.social::after{
-  content:"";position:absolute;left:-65%;top:0;width:46%;height:100%;
-  transform:skewX(-22deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);
-  animation:cardSweep 6.6s ease-in-out infinite;
-}
-.social:nth-child(2)::after{animation-delay:.8s}.social:nth-child(3)::after{animation-delay:1.6s}
-.icon-wrap{
-  width:36px;height:36px;border-radius:11px;display:grid;place-items:center;margin-bottom:8px;
-  background:rgba(255,255,255,.038);border:1px solid currentColor;
-  box-shadow:0 0 13px color-mix(in srgb,currentColor 30%,transparent);
-}
-.social svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.instagram{color:#bd63ff}.youtube{color:#ff416c}.whatsapp{color:#45e46b}
-.social-label{font-size:9px;font-weight:700;line-height:1;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
-.social-value{margin-top:6px;max-width:100%;overflow:hidden;text-overflow:ellipsis;font-family:"Oxanium",sans-serif;font-size:10px;font-weight:700;line-height:1.1;color:#fff;white-space:nowrap}
+    .overlay {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: clamp(132px, 14.8vh, 160px);
+      padding: 0 clamp(18px, 2.15vw, 42px) clamp(12px, 1.5vh, 17px);
+      display: flex;
+      align-items: flex-end;
+      filter: drop-shadow(0 -14px 30px rgba(0, 0, 0, 0.28));
+    }
 
-.center-zone{position:relative;justify-content:center;align-items:flex-end;z-index:8}
-.crown{
-  position:absolute;left:50%;bottom:0;transform:translateX(-50%);
-  width:min(100%,600px);height:210px;
-  filter:drop-shadow(0 -10px 24px rgba(0,0,0,.34));
-}
-.crown-shape{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.008)),
-    linear-gradient(180deg,var(--panel-2),var(--deep));
-  clip-path:polygon(0 100%,0 54px,52px 54px,76px 30px,calc(50% - 72px) 30px,calc(50% - 42px) 0,calc(50% + 42px) 0,calc(50% + 72px) 30px,calc(100% - 76px) 30px,calc(100% - 52px) 54px,100% 54px,100% 100%);
-  border-left:1px solid rgba(168,85,247,.46);border-right:1px solid rgba(34,211,238,.46);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 0 28px rgba(124,58,237,.12),0 0 22px rgba(34,211,238,.08);
-}
-.crown-shape::before{
-  content:"";position:absolute;left:0;right:0;top:0;height:2px;
-  background:linear-gradient(90deg,var(--violet),rgba(168,85,247,.34),rgba(34,211,238,.34),var(--cyan));
-  box-shadow:0 0 10px rgba(168,85,247,.42),0 0 10px rgba(34,211,238,.34);
-}
-.crown-shape::after{
-  content:"";position:absolute;left:10%;right:10%;bottom:9px;height:2px;
-  background:linear-gradient(90deg,transparent,var(--violet),var(--cyan),transparent);opacity:.7;
-}
+    .ambient {
+      position: absolute;
+      right: 3%;
+      bottom: -60px;
+      left: 3%;
+      height: 180px;
+      z-index: -2;
+      opacity: 0.44;
+      background:
+        radial-gradient(ellipse at 22% 100%, rgba(168, 85, 247, 0.28), transparent 46%),
+        radial-gradient(ellipse at 78% 100%, rgba(34, 211, 238, 0.22), transparent 46%);
+      filter: blur(24px);
+    }
 
-.logo-dock{
-  position:absolute;left:50%;top:9px;transform:translateX(-50%);
-  width:96px;height:108px;z-index:12;display:grid;place-items:center;
-  animation:logoBreath 4.8s ease-in-out infinite;
-}
-.logo-dock::after{
-  content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);
-  width:72px;height:16px;background:linear-gradient(90deg,var(--violet),var(--cyan));filter:blur(11px);opacity:.32;
-}
-.logo-dock svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 13px rgba(168,85,247,.42)) drop-shadow(0 0 10px rgba(34,211,238,.28))}
+    .bar {
+      position: relative;
+      width: 100%;
+      height: clamp(102px, 11.3vh, 122px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(330px, 27vw, 510px) minmax(0, 1fr);
+      align-items: stretch;
+      background:
+        linear-gradient(100deg, rgba(168, 85, 247, 0.08), transparent 30%, transparent 70%, rgba(34, 211, 238, 0.07)),
+        linear-gradient(180deg, var(--panel-soft), var(--panel));
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      clip-path: polygon(0 14px, 14px 0, calc(50% - 116px) 0, calc(50% - 102px) 14px, calc(50% + 102px) 14px, calc(50% + 116px) 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035), inset 0 -1px 0 rgba(255, 255, 255, 0.025);
+      overflow: hidden;
+    }
 
-.brand-copy{
-  position:absolute;left:0;right:0;bottom:24px;z-index:13;
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-}
-.brand-name{
-  font-family:"Oxanium",sans-serif;font-size:39px;font-weight:800;line-height:.94;letter-spacing:.01em;font-style:italic;
-  background:linear-gradient(105deg,#fff 0%,#d7e1ef 22%,#a66cff 47%,#3b7dff 72%,#22d3ee 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;
-  text-shadow:0 0 18px rgba(34,211,238,.08);
-}
-.brand-tag{
-  margin-top:7px;font-family:"Oxanium",sans-serif;font-size:8px;font-weight:700;letter-spacing:.24em;color:#6f86a7;text-transform:uppercase;
-}
-.register-line{
-  margin-top:10px;display:flex;align-items:center;gap:12px;
-  font-family:"Oxanium",sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;color:#d4deec;white-space:nowrap;text-transform:uppercase;
-}
-.register-line::before,.register-line::after{
-  content:"";width:40px;height:2px;background:linear-gradient(90deg,transparent,var(--violet));box-shadow:0 0 7px rgba(168,85,247,.35);
-}
-.register-line::after{background:linear-gradient(90deg,var(--cyan),transparent);box-shadow:0 0 7px rgba(34,211,238,.35)}
+    .bar::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--violet), rgba(168, 85, 247, 0.3) 38%, rgba(34, 211, 238, 0.3) 62%, var(--cyan));
+      box-shadow: 0 0 13px rgba(168, 85, 247, 0.4), 0 0 13px rgba(34, 211, 238, 0.35);
+    }
 
-.live-card{
-  width:min(100%,430px);padding:16px 18px 15px;border-radius:16px;
-  background:linear-gradient(180deg,rgba(255,255,255,.047),rgba(255,255,255,.017));
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 10px 28px rgba(0,0,0,.18);
-  animation:liveCardGlow 5.8s ease-in-out infinite;
-}
-.live-row{display:flex;align-items:center;gap:11px;white-space:nowrap}
-.live-pill{
-  display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;
-  background:rgba(255,45,85,.12);border:1px solid rgba(255,72,105,.25);
-  color:#ff6a86;font-family:"Oxanium",sans-serif;font-size:9px;font-weight:800;letter-spacing:.09em;
-}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#ff385f;box-shadow:0 0 10px rgba(255,56,95,.85);animation:pulse 1.55s ease-in-out infinite}
-.live-title{
-  font-family:"Oxanium",sans-serif;font-size:24px;font-weight:800;line-height:1;font-style:italic;letter-spacing:.01em;
-  background:linear-gradient(100deg,#fff 0%,#dbe6f4 30%,#2e79ff 65%,#22d3ee 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.live-sub{
-  margin-top:10px;display:flex;align-items:center;gap:9px;
-  font-family:"Oxanium",sans-serif;font-size:11px;font-weight:700;color:#2bdfff;letter-spacing:.08em;white-space:nowrap;
-}
-.live-sub::before,.live-sub::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(34,211,238,.7))}
-.live-sub::after{background:linear-gradient(90deg,rgba(34,211,238,.7),transparent)}
-.live-desc{margin-top:9px;display:flex;align-items:center;gap:7px;font-size:10px;font-weight:500;color:#c4cfdf;white-space:nowrap}
-.live-desc svg{width:14px;height:14px;color:#b472ff;flex:0 0 auto}
+    .bar::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -18%;
+      width: 11%;
+      z-index: 8;
+      opacity: 0;
+      transform: skewX(-22deg);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.11), transparent);
+      filter: blur(2px);
+      animation: sweep 8s ease-in-out infinite;
+    }
 
-.sweep{
-  position:absolute;left:-18%;bottom:0;width:13%;height:150px;z-index:9;transform:skewX(-22deg);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);filter:blur(2px);
-  animation:sweep 7.4s ease-in-out infinite;
-}
-.corner-left,.corner-right{position:absolute;bottom:9px;width:140px;height:4px;z-index:10;opacity:.85}
-.corner-left{left:0;background:linear-gradient(90deg,var(--violet),transparent)}
-.corner-right{right:0;background:linear-gradient(90deg,transparent,var(--cyan))}
+    .section {
+      min-width: 0;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+    }
 
-@keyframes pulse{0%,100%{transform:scale(.82);opacity:.65}50%{transform:scale(1.15);opacity:1}}
-@keyframes logoBreath{0%,100%{transform:translateX(-50%) translateY(0) scale(1);filter:brightness(1)}50%{transform:translateX(-50%) translateY(-3px) scale(1.018);filter:brightness(1.08)}}
-@keyframes socialFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-@keyframes cardSweep{0%,18%{left:-65%;opacity:0}30%{opacity:.75}48%{left:125%;opacity:0}100%{left:125%;opacity:0}}
-@keyframes liveCardGlow{0%,100%{border-color:rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 10px 28px rgba(0,0,0,.18)}50%{border-color:rgba(34,211,238,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 32px rgba(0,0,0,.2),0 0 18px rgba(34,211,238,.05)}}
-@keyframes sweep{0%,18%{left:-18%;opacity:0}28%{opacity:.65}54%{left:108%;opacity:0}100%{left:108%;opacity:0}}
+    .social-section {
+      padding: 14px clamp(16px, 2vw, 36px) 12px clamp(14px, 1.8vw, 32px);
+    }
 
-@media(max-width:1500px){
-  .rail{grid-template-columns:minmax(0,1fr) minmax(430px,520px) minmax(0,1fr)}
-  .left-zone{padding-left:18px;padding-right:26px}.right-zone{padding-right:18px;padding-left:26px}
-  .socials{gap:8px}.social{padding:10px 6px}.social-value{font-size:8.5px}.social-label{font-size:7.5px}
-  .icon-wrap{width:31px;height:31px}.social svg{width:17px;height:17px}
-  .live-card{width:min(100%,350px)}.live-title{font-size:20px}.live-sub{font-size:9px}.live-desc{font-size:8.5px}
-  .brand-name{font-size:34px}.crown{width:min(100%,520px)}
-}
+    .social-section::after,
+    .live-section::before {
+      content: "";
+      position: absolute;
+      top: 22%;
+      bottom: 20%;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+    }
 
-@media(max-width:1050px){
-  .overlay{height:208px}.base,.rail{height:134px}
-  .rail{grid-template-columns:minmax(0,1fr) minmax(330px,410px) minmax(0,1fr)}
-  .crown{height:192px;width:min(100%,410px)}
-  .logo-dock{top:14px;width:76px;height:86px}
-  .brand-copy{bottom:19px}.brand-name{font-size:27px}.brand-tag{font-size:6px}.register-line{font-size:7px;gap:7px}.register-line::before,.register-line::after{width:20px}
-  .left-zone{padding:14px 14px 14px 10px}.right-zone{padding:14px 10px 14px 14px}
-  .socials{gap:5px}.social{min-height:82px;padding:8px 4px}.icon-wrap{width:27px;height:27px;margin-bottom:6px}.social svg{width:15px;height:15px}.social-label{font-size:6px}.social-value{font-size:6.4px;margin-top:4px}
-  .live-card{padding:11px 10px;min-width:0}.live-pill{font-size:6px;padding:4px 6px}.live-title{font-size:14px}.live-sub{font-size:6.4px;margin-top:7px;gap:4px}.live-desc{font-size:6.2px;margin-top:6px}.live-desc svg{width:10px;height:10px}
-}
-</style>
+    .social-section::after { right: 0; }
+    .live-section::before { left: 0; }
+
+    .socials {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(10px, 1vw, 18px);
+    }
+
+    .social {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: var(--social-color);
+      border: 1px solid color-mix(in srgb, var(--social-color) 42%, transparent);
+      border-radius: 10px;
+      background: linear-gradient(145deg, color-mix(in srgb, var(--social-color) 12%, transparent), rgba(255, 255, 255, 0.025));
+      box-shadow: 0 0 16px color-mix(in srgb, var(--social-color) 13%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .social-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .instagram { --social-color: #c679ff; }
+    .youtube { --social-color: #ff5574; }
+    .whatsapp { --social-color: #49e879; }
+
+    .social-copy { min-width: 0; }
+
+    .social-label {
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: clamp(7px, 0.47vw, 9px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .social-value {
+      overflow: hidden;
+      color: #eef4ff;
+      font-size: clamp(8px, 0.58vw, 11px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: 0.025em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand-section {
+      justify-content: center;
+      overflow: visible;
+    }
+
+    .brand-frame {
+      position: absolute;
+      right: 22px;
+      bottom: 0;
+      left: 22px;
+      height: calc(100% + 26px);
+      background:
+        radial-gradient(circle at 50% 10%, rgba(168, 85, 247, 0.12), transparent 38%),
+        linear-gradient(180deg, rgba(12, 21, 38, 0.98), rgba(3, 8, 18, 0.99));
+      border-right: 1px solid rgba(34, 211, 238, 0.34);
+      border-left: 1px solid rgba(168, 85, 247, 0.38);
+      clip-path: polygon(0 22px, 22px 0, calc(50% - 62px) 0, calc(50% - 50px) 12px, calc(50% + 50px) 12px, calc(50% + 62px) 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+      box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    }
+
+    .brand-frame::after {
+      content: "";
+      position: absolute;
+      right: 12%;
+      bottom: 8px;
+      left: 12%;
+      height: 1px;
+      opacity: 0.75;
+      background: linear-gradient(90deg, transparent, var(--violet), var(--cyan), transparent);
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.26);
+    }
+
+    .brand-content {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      padding-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(12px, 1vw, 18px);
+    }
+
+    .brand-logo {
+      position: relative;
+      width: clamp(62px, 4.3vw, 80px);
+      height: clamp(62px, 4.3vw, 80px);
+      flex: 0 0 auto;
+      animation: logoBreathe 4.6s ease-in-out infinite;
+    }
+
+    .brand-logo::after {
+      content: "";
+      position: absolute;
+      right: 14%;
+      bottom: -4px;
+      left: 14%;
+      height: 10px;
+      opacity: 0.38;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+      filter: blur(9px);
+    }
+
+    .brand-logo svg {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.35)) drop-shadow(0 0 8px rgba(34, 211, 238, 0.22));
+    }
+
+    .brand-copy { min-width: 0; }
+
+    .brand-name {
+      font-family: "Arial Narrow", "Segoe UI", sans-serif;
+      font-size: clamp(25px, 2vw, 38px);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 0.9;
+      letter-spacing: 0.035em;
+      background: linear-gradient(105deg, #ffffff 4%, #dbe6f4 28%, var(--violet-bright) 58%, var(--cyan-bright) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+
+    .brand-tagline {
+      margin-top: 8px;
+      color: #7f91ad;
+      font-size: clamp(6px, 0.47vw, 9px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.22em;
+      white-space: nowrap;
+    }
+
+    .brand-site {
+      margin-top: 7px;
+      color: #c9d5e6;
+      font-size: clamp(7px, 0.53vw, 10px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+    }
+
+    .live-section {
+      justify-content: flex-end;
+      padding: 12px clamp(18px, 2vw, 36px) 11px clamp(20px, 2.2vw, 40px);
+    }
+
+    .live-card {
+      width: min(100%, 430px);
+      min-width: 0;
+    }
+
+    .live-heading {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 9px;
+      color: #ff7891;
+      border: 1px solid rgba(255, 59, 100, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 59, 100, 0.1);
+      font-size: clamp(7px, 0.5vw, 9px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 10px rgba(255, 59, 100, 0.85);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    .live-title {
+      min-width: 0;
+      overflow: hidden;
+      font-family: "Arial Narrow", "Segoe UI", sans-serif;
+      font-size: clamp(19px, 1.55vw, 29px);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1;
+      letter-spacing: 0.025em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      background: linear-gradient(100deg, #ffffff 0%, #dce8f7 40%, #51dff5 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .live-subtitle {
+      margin-top: 9px;
+      overflow: hidden;
+      color: var(--cyan-bright);
+      font-size: clamp(9px, 0.68vw, 13px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .live-description {
+      margin-top: 8px;
+      overflow: hidden;
+      color: #b8c4d5;
+      font-size: clamp(8px, 0.62vw, 12px);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: 0.025em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.82); opacity: 0.62; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    @keyframes logoBreathe {
+      0%, 100% { transform: translateY(0) scale(1); filter: brightness(1); }
+      50% { transform: translateY(-2px) scale(1.018); filter: brightness(1.1); }
+    }
+
+    @keyframes sweep {
+      0%, 18% { left: -18%; opacity: 0; }
+      28% { opacity: 0.65; }
+      52% { left: 108%; opacity: 0; }
+      100% { left: 108%; opacity: 0; }
+    }
+
+    @media (max-width: 1180px), (max-height: 760px) {
+      .overlay { height: 132px; padding-right: 18px; padding-bottom: 10px; padding-left: 18px; }
+      .bar { height: 102px; grid-template-columns: minmax(0, 1fr) 330px minmax(0, 1fr); }
+      .social-section { padding-right: 15px; padding-left: 14px; }
+      .socials { gap: 8px; }
+      .social { grid-template-columns: 28px minmax(0, 1fr); gap: 7px; }
+      .social-icon { width: 28px; height: 28px; border-radius: 8px; }
+      .social-icon svg { width: 15px; height: 15px; }
+      .live-section { padding-right: 14px; padding-left: 18px; }
+      .brand-frame { right: 14px; left: 14px; }
+      .brand-logo { width: 62px; height: 62px; }
+    }
+
+    @media (max-width: 860px) {
+      .bar { grid-template-columns: minmax(0, 0.9fr) 250px minmax(0, 0.9fr); }
+      .socials { grid-template-columns: repeat(3, 1fr); }
+      .social { display: flex; justify-content: center; }
+      .social-copy { display: none; }
+      .brand-content { gap: 8px; }
+      .brand-logo { width: 52px; height: 52px; }
+      .brand-name { font-size: 22px; }
+      .brand-tagline { font-size: 5.5px; }
+      .brand-site { font-size: 6px; }
+      .status-pill { padding: 5px 7px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
 </head>
 <body>
-<main class="stage" aria-label="Veerzone premium StreamChamp overlay">
-  <section class="overlay">
-    <div class="ambient"></div>
-    <div class="base"></div>
-    <div class="sweep"></div>
-    <div class="corner-left"></div><div class="corner-right"></div>
+  <main class="stage" aria-label="Veerzone premium stream overlay">
+    <section class="overlay">
+      <div class="ambient"></div>
+      <div class="bar">
+        <div class="section social-section">
+          <div class="socials">
+            <div class="social instagram">
+              <div class="social-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="social-copy"><div class="social-label">Instagram</div><div class="social-value">@veerzone_battles</div></div>
+            </div>
+            <div class="social youtube">
+              <div class="social-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="social-copy"><div class="social-label">YouTube</div><div class="social-value">@veerzone_official</div></div>
+            </div>
+            <div class="social whatsapp">
+              <div class="social-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.4 11.7a8.4 8.4 0 0 1-12.5 7.4L3 20.4l1.4-4.6A8.4 8.4 0 1 1 20.4 11.7z"/><path d="M8.6 7.9c.3-.6.7-.6 1-.6h.4c.2 0 .5.1.6.5l.8 2c.1.3.1.6-.1.8l-.8 1c-.2.2-.1.5.1.8.5.9 1.3 1.7 2.3 2.2.3.2.6.2.8 0l1-.9c.2-.2.5-.2.8-.1l2 .9c.3.2.5.4.5.7 0 .4-.2 1.4-.8 2-.6.7-1.5 1-2.5.8-1.3-.2-2.9-.8-4.8-2.5-1.5-1.4-2.7-3-3.1-4.3-.5-1.5.1-2.6.8-3.3z"/></svg>
+              </div>
+              <div class="social-copy"><div class="social-label">WhatsApp</div><div class="social-value">9014122762</div></div>
+            </div>
+          </div>
+        </div>
 
-    <div class="rail">
-      <div class="zone left-zone">
-        <div class="socials">
-          <div class="social instagram">
-            <div class="icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg></div>
-            <div class="social-label">Instagram</div>
-            <div class="social-value">@veerzone_battles</div>
+        <div class="section brand-section">
+          <div class="brand-frame"></div>
+          <div class="brand-content">
+            <div class="brand-logo" aria-hidden="true">
+              <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="vzOuter" x1="48" y1="35" x2="278" y2="284" gradientUnits="userSpaceOnUse"><stop stop-color="#b44cff"/><stop offset="0.48" stop-color="#6d5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+                  <linearGradient id="vzFill" x1="74" y1="68" x2="245" y2="258" gradientUnits="userSpaceOnUse"><stop stop-color="#f050ff"/><stop offset="0.45" stop-color="#7c3aed"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+                </defs>
+                <path d="M160 19L281 88V226L160 301L39 226V88L160 19Z" fill="#070b18" stroke="url(#vzOuter)" stroke-width="10"/>
+                <path d="M82 99H118L160 188L202 99H238L160 267L82 99Z" fill="url(#vzFill)" stroke="#9bdfff" stroke-opacity=".18" stroke-width="3"/>
+                <path d="M160 55L177 83L160 112L143 83L160 55Z" fill="#22d3ee" stroke="#b9f5ff" stroke-width="3"/>
+              </svg>
+            </div>
+            <div class="brand-copy">
+              <div class="brand-name">VEERZONE</div>
+              <div class="brand-tagline">BGMI COMPETITIVE ARENA</div>
+              <div class="brand-site" id="siteText">VEERZONE.COM</div>
+            </div>
           </div>
-          <div class="social youtube">
-            <div class="icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></div>
-            <div class="social-label">YouTube</div>
-            <div class="social-value">@veerzone_official</div>
-          </div>
-          <div class="social whatsapp">
-            <div class="icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 11.7a8.4 8.4 0 0 1-12.5 7.4L3 20.4l1.4-4.6A8.4 8.4 0 1 1 20.4 11.7z"/><path d="M8.6 7.9c.3-.6.7-.6 1-.6h.4c.2 0 .5.1.6.5l.8 2c.1.3.1.6-.1.8l-.8 1c-.2.2-.1.5.1.8.5.9 1.3 1.7 2.3 2.2.3.2.6.2.8 0l1-.9c.2-.2.5-.2.8-.1l2 .9c.3.2.5.4.5.7 0 .4-.2 1.4-.8 2-.6.7-1.5 1-2.5.8-1.3-.2-2.9-.8-4.8-2.5-1.5-1.4-2.7-3-3.1-4.3-.5-1.5.1-2.6.8-3.3z"/></svg></div>
-            <div class="social-label">WhatsApp</div>
-            <div class="social-value">9014122762</div>
+        </div>
+
+        <div class="section live-section">
+          <div class="live-card">
+            <div class="live-heading">
+              <div class="status-pill"><span class="live-dot"></span><span id="statusText">LIVE</span></div>
+              <div class="live-title" id="titleText">LIVE MATCHES</div>
+            </div>
+            <div class="live-subtitle" id="subtitleText">CLASSICS &amp; TDMs</div>
+            <div class="live-description" id="descriptionText">Daily TDMs • Weekly Classics</div>
           </div>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div class="zone center-zone">
-        <div class="crown"><div class="crown-shape"></div></div>
-        <div class="logo-dock" aria-hidden="true">
-          <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="vzOuter" x1="48" y1="35" x2="278" y2="284" gradientUnits="userSpaceOnUse"><stop stop-color="#b44cff"/><stop offset="0.48" stop-color="#6d5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-              <linearGradient id="vzFill" x1="74" y1="68" x2="245" y2="258" gradientUnits="userSpaceOnUse"><stop stop-color="#f050ff"/><stop offset="0.45" stop-color="#7c3aed"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-            </defs>
-            <path d="M160 19L281 88V226L160 301L39 226V88L160 19Z" fill="#070b18" stroke="url(#vzOuter)" stroke-width="10"/>
-            <path d="M82 99H118L160 188L202 99H238L160 267L82 99Z" fill="url(#vzFill)" stroke="#9bdfff" stroke-opacity=".18" stroke-width="3"/>
-            <path d="M160 55L177 83L160 112L143 83L160 55Z" fill="#22d3ee" stroke="#b9f5ff" stroke-width="3"/>
-          </svg>
-        </div>
-        <div class="brand-copy">
-          <div class="brand-name">VEERZONE</div>
-          <div class="brand-tag">BGMI COMPETITIVE ARENA</div>
-          <div class="register-line">REGISTER IN VEERZONE.COM</div>
-        </div>
-      </div>
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      const fields = {
+        title: ["titleText", "LIVE MATCHES"],
+        subtitle: ["subtitleText", "CLASSICS & TDMs"],
+        description: ["descriptionText", "Daily TDMs • Weekly Classics"],
+        status: ["statusText", "LIVE"],
+        site: ["siteText", "VEERZONE.COM"]
+      };
 
-      <div class="zone right-zone">
-        <div class="live-card">
-          <div class="live-row">
-            <div class="live-pill"><span class="live-dot"></span>LIVE</div>
-            <div class="live-title">LIVE MATCHES</div>
-          </div>
-          <div class="live-sub">Classic's and TDM's</div>
-          <div class="live-desc">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Daily TDM's and Weekly Classics
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
+      Object.entries(fields).forEach(([key, [id, fallback]]) => {
+        const element = document.getElementById(id);
+        const value = params.get(key)?.trim();
+        if (element) element.textContent = value || fallback;
+      });
+    })();
+  </script>
 </body>
 </html>
