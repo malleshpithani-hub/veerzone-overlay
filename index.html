@@ -77,7 +77,7 @@
 
     /* StreamChamp performance profile: one GPU-friendly logo loop, everything else static. */
     .rig::after,.wing::before,.core-shell::before,.social-icon,.emblem-aura,.emblem-ring,.brand-name,.live-card,.dot,.meter i{animation:none!important}
-    .scan{display:none}
+    .scan{display:none;animation:none!important}
     .emblem svg{animation:logoProLoop 4.8s cubic-bezier(.45,0,.55,1) infinite!important;will-change:transform,filter;transform:translateZ(0);backface-visibility:hidden}
     .emblem-aura{transform:rotate(24deg);opacity:.72;filter:blur(7px)}
     .emblem-ring{transform:scale(1.02);opacity:.78}
@@ -98,7 +98,7 @@
 
     @keyframes logoProLoop{0%,100%{transform:translate3d(0,2px,0) scale(.985);filter:brightness(1) drop-shadow(0 0 8px rgba(168,85,247,.36)) drop-shadow(0 0 7px rgba(34,211,238,.24))}50%{transform:translate3d(0,-5px,0) scale(1.045);filter:brightness(1.18) drop-shadow(0 0 15px rgba(168,85,247,.52)) drop-shadow(0 0 12px rgba(34,211,238,.38))}}
 
-    @media(max-width:1180px),(max-height:760px){.overlay{height:184px}.rig{height:142px;grid-template-columns:minmax(0,1fr) 390px minmax(0,1fr)}.rig::before{height:136px}.wing{height:116px}.left-wing{padding:15px 44px 13px 25px}.right-wing{padding:14px 25px 13px 44px}.socials{gap:12px}.social{grid-template-columns:40px minmax(0,1fr);gap:10px}.social-icon{width:40px;height:40px}.social-icon svg{width:19px;height:19px}.social-label{font-size:9px}.social-value{font-size:13px}.core{height:154px;margin-right:-26px;margin-left:-26px}.core-content{padding:14px 24px;gap:15px}.emblem{width:86px;height:86px}.emblem svg{width:74px;height:74px}.brand-name{font-size:34px}.tagline,.site{font-size:8px}.live-card{width:min(92%,460px);padding:0 18px}.status{font-size:8px;padding:7px 9px}.title{font-size:28px}.subtitle,.description{font-size:12px}.meter{width:138px;margin-top:10px}}
+    @media(max-width:1180px),(max-height:760px){.overlay{height:184px}.rig{height:142px;grid-template-columns:minmax(0,1fr) 360px minmax(0,1fr)}.rig::before{height:136px}.wing{height:116px}.left-wing{padding:15px 40px 13px 22px}.right-wing{padding:14px 22px 13px 40px}.socials{gap:8px}.social{grid-template-columns:36px minmax(0,1fr);gap:8px}.social-icon{width:36px;height:36px}.social-icon svg{width:18px;height:18px}.social-label{font-size:8px}.social-value{font-size:12px}.core{height:154px;margin-right:-26px;margin-left:-26px}.core-content{padding:14px 20px;gap:13px}.emblem{width:82px;height:82px}.emblem svg{width:72px;height:72px}.brand-name{font-size:33px}.tagline,.site{font-size:8px}.live-card{width:min(92%,460px);padding:0 18px}.status{font-size:8px;padding:7px 9px}.title{font-size:28px}.subtitle,.description{font-size:12px}.meter{width:138px;margin-top:10px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important}}
   </style>
 </head>
