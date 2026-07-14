@@ -2,580 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <title>Veerzone Premium Stream Overlay</title>
+  <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate" />
+  <title>Veerzone Pro Stream Overlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --violet: #a855f7;
-      --violet-bright: #c778ff;
-      --cyan: #22d3ee;
-      --cyan-bright: #79efff;
-      --red: #ff3b64;
-      --white: #f7faff;
-      --muted: #8fa0b9;
-      --panel: rgba(4, 9, 20, 0.94);
-      --panel-soft: rgba(10, 19, 34, 0.9);
+    :root{
+      --ink:#02050c;--panel:#060b16;--panel2:#0a1423;--white:#f7fbff;--muted:#8090aa;
+      --violet:#a855f7;--purple:#7038ff;--cyan:#22d3ee;--ice:#94f5ff;--live:#ff315e;
     }
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:transparent!important}
+    body{font-family:"Rajdhani","Segoe UI",sans-serif;color:var(--white);pointer-events:none;-webkit-font-smoothing:antialiased}
+    .stage{position:fixed;inset:0;overflow:hidden;background:transparent;isolation:isolate}
+    .overlay{position:absolute;left:0;right:0;bottom:0;height:176px;padding:0 clamp(20px,2.2vw,42px) 15px;display:flex;align-items:flex-end}
+    .ambient{position:absolute;left:4%;right:4%;bottom:-75px;height:205px;z-index:-2;opacity:.52;filter:blur(28px);background:radial-gradient(ellipse at 22% 100%,rgba(112,56,255,.3),transparent 44%),radial-gradient(ellipse at 78% 100%,rgba(34,211,238,.25),transparent 44%)}
+    .rig{position:relative;width:100%;height:120px;display:grid;grid-template-columns:minmax(0,1fr) clamp(360px,27vw,510px) minmax(0,1fr);align-items:end;filter:drop-shadow(0 -14px 28px rgba(0,0,0,.36))}
 
-    * { box-sizing: border-box; }
+    .wing{position:relative;height:104px;min-width:0;overflow:hidden;background:linear-gradient(180deg,rgba(12,22,39,.97),rgba(3,8,17,.985));border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.06)}
+    .wing::before{content:"";position:absolute;top:0;height:2px;width:72%;background-size:200% 100%;animation:energyFlow 4.8s linear infinite}
+    .wing::after{content:"";position:absolute;inset:7px 0 0;opacity:.12;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(90deg,#000,transparent 82%)}
+    .left-wing{padding:14px 50px 12px 23px;border-left:1px solid rgba(168,85,247,.6);clip-path:polygon(0 14px,14px 0,calc(100% - 34px) 0,100% 34px,100% 100%,0 100%)}
+    .left-wing::before{left:0;background-image:linear-gradient(90deg,var(--violet),var(--ice),var(--violet))}
+    .right-wing{padding:13px 23px 11px 50px;border-right:1px solid rgba(34,211,238,.65);clip-path:polygon(34px 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%,0 34px)}
+    .right-wing::before{right:0;background-image:linear-gradient(90deg,var(--cyan),var(--violet),var(--cyan))}
+    .right-wing::after{transform:scaleX(-1)}
+    .cutline{position:absolute;top:13px;bottom:10px;width:1px;z-index:3;background:linear-gradient(180deg,transparent,rgba(255,255,255,.2),transparent)}
+    .left-wing .cutline{right:24px;transform:skewX(-19deg)}.right-wing .cutline{left:24px;transform:skewX(19deg)}
+    .scan{position:absolute;top:0;bottom:0;left:-22%;width:10%;z-index:5;opacity:0;transform:skewX(-24deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);filter:blur(2px);animation:scan 7s ease-in-out infinite}
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
-      background: transparent !important;
-    }
+    .socials{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:clamp(10px,1.1vw,20px)}
+    .social{min-width:0;display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:10px}
+    .social-icon{position:relative;width:38px;height:38px;display:grid;place-items:center;color:var(--tone);background:linear-gradient(145deg,color-mix(in srgb,var(--tone) 15%,transparent),rgba(255,255,255,.02));border:1px solid color-mix(in srgb,var(--tone) 48%,transparent);clip-path:polygon(24% 0,100% 0,100% 76%,76% 100%,0 100%,0 24%);filter:drop-shadow(0 0 7px color-mix(in srgb,var(--tone) 22%,transparent));animation:iconCharge 4.5s ease-in-out infinite}
+    .social:nth-child(2) .social-icon{animation-delay:-1.5s}.social:nth-child(3) .social-icon{animation-delay:-3s}
+    .social-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .instagram{--tone:#c67aff}.youtube{--tone:#ff4f73}.whatsapp{--tone:#45e979}
+    .social-copy{min-width:0}.social-label{margin-bottom:5px;color:var(--muted);font-family:"Oxanium",sans-serif;font-size:8px;font-weight:700;line-height:1;letter-spacing:.15em;text-transform:uppercase}.social-value{overflow:hidden;color:#eef5ff;font-size:11px;font-weight:700;line-height:1;letter-spacing:.02em;text-overflow:ellipsis;white-space:nowrap}
 
-    body {
-      color: var(--white);
-      font-family: "Segoe UI", Inter, Arial, sans-serif;
-      pointer-events: none;
-      -webkit-font-smoothing: antialiased;
-    }
+    .core{position:relative;height:146px;z-index:8;display:flex;align-items:flex-end;justify-content:center}
+    .core-shell{position:absolute;inset:0 13px;background:radial-gradient(circle at 50% 0,rgba(112,56,255,.2),transparent 38%),linear-gradient(180deg,rgba(12,22,40,.995),rgba(2,6,14,.998));clip-path:polygon(0 36px,28px 8px,calc(50% - 58px) 8px,calc(50% - 48px) 0,calc(50% + 48px) 0,calc(50% + 58px) 8px,calc(100% - 28px) 8px,100% 36px,100% 100%,0 100%);border-left:1px solid rgba(168,85,247,.55);border-right:1px solid rgba(34,211,238,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+    .core-shell::before{content:"";position:absolute;left:9%;right:9%;bottom:7px;height:2px;background:linear-gradient(90deg,transparent,var(--violet),var(--cyan),transparent);background-size:200% 100%;box-shadow:0 0 10px rgba(34,211,238,.3);animation:energyFlow 4.5s linear infinite}
+    .core-shell::after{content:"";position:absolute;inset:0;opacity:.08;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.16) 42.3%,transparent 42.7%)}
+    .core-content{position:relative;z-index:3;width:100%;height:100%;padding:13px 30px 13px;display:flex;align-items:center;justify-content:center;gap:17px}
+    .emblem{position:relative;width:90px;height:90px;flex:0 0 auto;display:grid;place-items:center}
+    .emblem-aura{position:absolute;inset:-8px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 18%,rgba(168,85,247,.75) 28%,transparent 40% 60%,rgba(34,211,238,.72) 72%,transparent 84%);filter:blur(5px);opacity:.64;animation:orbit 8s linear infinite}
+    .emblem-ring{position:absolute;inset:2px;border:1px solid rgba(138,126,255,.28);clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);animation:ringPulse 4s ease-in-out infinite}
+    .emblem svg{position:relative;z-index:2;width:76px;height:76px;display:block;filter:drop-shadow(0 0 9px rgba(168,85,247,.45)) drop-shadow(0 0 8px rgba(34,211,238,.28));animation:logoFloat 4s ease-in-out infinite}
+    .brand{min-width:0;padding-top:3px}
+    .brand-name{position:relative;width:max-content;font-family:"Oxanium",sans-serif;font-size:clamp(27px,2.05vw,39px);font-weight:800;font-style:italic;line-height:.9;letter-spacing:.035em;transform:skewX(-3deg);background:linear-gradient(105deg,#fff 0%,#dce7f4 25%,#c773ff 48%,#627fff 70%,#6bedff 100%);background-size:180% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.3px rgba(235,247,255,.35);filter:drop-shadow(0 0 9px rgba(112,56,255,.2));white-space:nowrap;animation:wordShine 6s ease-in-out infinite}
+    .brand-name::after{content:"";position:absolute;left:1%;right:0;bottom:-7px;height:3px;background:linear-gradient(90deg,var(--violet),var(--cyan),transparent);clip-path:polygon(0 0,100% 0,92% 100%,3% 100%);box-shadow:0 0 8px rgba(34,211,238,.28)}
+    .tagline{margin-top:13px;color:#8ea0bb;font-family:"Oxanium",sans-serif;font-size:8px;font-weight:700;letter-spacing:.2em;white-space:nowrap}.site{margin-top:7px;color:#d7e2f0;font-family:"Oxanium",sans-serif;font-size:8px;font-weight:600;letter-spacing:.17em;white-space:nowrap}
 
-    .stage {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      background: transparent;
-      isolation: isolate;
-    }
+    .live-card{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;min-width:0;padding-left:2px;animation:liveBreathe 4.4s ease-in-out infinite}
+    .live-top{display:flex;align-items:center;gap:12px;min-width:0}.status{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:6px 9px;color:#ff708b;background:rgba(255,49,94,.1);border:1px solid rgba(255,49,94,.3);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);font-family:"Oxanium",sans-serif;font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 11px rgba(255,49,94,.9);animation:livePulse 1.5s ease-in-out infinite}.title{min-width:0;overflow:hidden;font-family:"Oxanium",sans-serif;font-size:clamp(20px,1.55vw,29px);font-weight:800;font-style:italic;line-height:1;letter-spacing:.02em;text-overflow:ellipsis;white-space:nowrap;background:linear-gradient(100deg,#fff,#d9e8f8 42%,var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent}.subtitle{margin-top:9px;overflow:hidden;color:var(--cyan);font-family:"Oxanium",sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-overflow:ellipsis;text-transform:uppercase;white-space:nowrap}.description{margin-top:7px;overflow:hidden;color:#aab8cc;font-size:11px;font-weight:600;letter-spacing:.03em;text-overflow:ellipsis;white-space:nowrap}.meter{display:flex;gap:4px;margin-top:10px;width:118px}.meter i{display:block;height:2px;flex:1;background:#28354a;transform:skewX(-24deg);animation:meter 2.4s ease-in-out infinite}.meter i:nth-child(2){animation-delay:.15s}.meter i:nth-child(3){animation-delay:.3s}.meter i:nth-child(4){animation-delay:.45s}.meter i:nth-child(5){animation-delay:.6s}
 
-    .overlay {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      height: clamp(132px, 14.8vh, 160px);
-      padding: 0 clamp(18px, 2.15vw, 42px) clamp(12px, 1.5vh, 17px);
-      display: flex;
-      align-items: flex-end;
-      filter: drop-shadow(0 -14px 30px rgba(0, 0, 0, 0.28));
-    }
+    @keyframes energyFlow{from{background-position:200% 50%}to{background-position:0 50%}}
+    @keyframes scan{0%,18%{left:-22%;opacity:0}28%{opacity:.65}52%{left:108%;opacity:0}100%{left:108%;opacity:0}}
+    @keyframes orbit{to{transform:rotate(360deg)}}
+    @keyframes logoFloat{0%,100%{transform:translateY(2px) scale(.985);filter:brightness(.98)}50%{transform:translateY(-4px) scale(1.035);filter:brightness(1.16)}}
+    @keyframes ringPulse{0%,100%{transform:scale(.94);opacity:.45}50%{transform:scale(1.04);opacity:.9}}
+    @keyframes iconCharge{0%,100%{transform:translateY(1px);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--tone) 16%,transparent))}50%{transform:translateY(-3px);filter:drop-shadow(0 0 10px color-mix(in srgb,var(--tone) 34%,transparent))}}
+    @keyframes wordShine{0%,100%{background-position:100% 50%}50%{background-position:0 50%}}
+    @keyframes livePulse{0%,100%{transform:scale(.78);opacity:.6}50%{transform:scale(1.18);opacity:1}}
+    @keyframes liveBreathe{0%,100%{filter:brightness(.98)}50%{filter:brightness(1.08)}}
+    @keyframes meter{0%,100%{background:#28354a;box-shadow:none}50%{background:var(--cyan);box-shadow:0 0 7px rgba(34,211,238,.6)}}
 
-    .ambient {
-      position: absolute;
-      right: 3%;
-      bottom: -60px;
-      left: 3%;
-      height: 180px;
-      z-index: -2;
-      opacity: 0.44;
-      background:
-        radial-gradient(ellipse at 22% 100%, rgba(168, 85, 247, 0.28), transparent 46%),
-        radial-gradient(ellipse at 78% 100%, rgba(34, 211, 238, 0.22), transparent 46%);
-      filter: blur(24px);
-    }
-
-    .bar {
-      position: relative;
-      width: 100%;
-      height: clamp(102px, 11.3vh, 122px);
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) clamp(330px, 27vw, 510px) minmax(0, 1fr);
-      align-items: stretch;
-      background:
-        linear-gradient(100deg, rgba(168, 85, 247, 0.08), transparent 30%, transparent 70%, rgba(34, 211, 238, 0.07)),
-        linear-gradient(180deg, var(--panel-soft), var(--panel));
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      clip-path: polygon(0 14px, 14px 0, calc(50% - 116px) 0, calc(50% - 102px) 14px, calc(50% + 102px) 14px, calc(50% + 116px) 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035), inset 0 -1px 0 rgba(255, 255, 255, 0.025);
-      overflow: hidden;
-    }
-
-    .bar::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--violet), rgba(168, 85, 247, 0.3) 30%, var(--cyan-bright) 50%, rgba(34, 211, 238, 0.3) 70%, var(--violet));
-      background-size: 220% 100%;
-      box-shadow: 0 0 13px rgba(168, 85, 247, 0.4), 0 0 13px rgba(34, 211, 238, 0.35);
-      animation: borderFlow 6.5s linear infinite;
-    }
-
-    .bar::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: -18%;
-      width: 11%;
-      z-index: 8;
-      opacity: 0;
-      transform: skewX(-22deg);
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.11), transparent);
-      filter: blur(2px);
-      animation: sweep 8s ease-in-out infinite;
-    }
-
-    .section {
-      min-width: 0;
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-    }
-
-    .social-section {
-      padding: 14px clamp(16px, 2vw, 36px) 12px clamp(14px, 1.8vw, 32px);
-    }
-
-    .social-section::after,
-    .live-section::before {
-      content: "";
-      position: absolute;
-      top: 22%;
-      bottom: 20%;
-      width: 1px;
-      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
-    }
-
-    .social-section::after { right: 0; }
-    .live-section::before { left: 0; }
-
-    .socials {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(10px, 1vw, 18px);
-    }
-
-    .social {
-      min-width: 0;
-      display: grid;
-      grid-template-columns: 34px minmax(0, 1fr);
-      align-items: center;
-      gap: 10px;
-    }
-
-    .social-icon {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      color: var(--social-color);
-      border: 1px solid color-mix(in srgb, var(--social-color) 42%, transparent);
-      border-radius: 10px;
-      background: linear-gradient(145deg, color-mix(in srgb, var(--social-color) 12%, transparent), rgba(255, 255, 255, 0.025));
-      box-shadow: 0 0 16px color-mix(in srgb, var(--social-color) 13%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      animation: iconFloat 5s ease-in-out infinite;
-    }
-
-    .social:nth-child(2) .social-icon { animation-delay: -1.65s; }
-    .social:nth-child(3) .social-icon { animation-delay: -3.3s; }
-
-    .social-icon svg {
-      width: 18px;
-      height: 18px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .instagram { --social-color: #c679ff; }
-    .youtube { --social-color: #ff5574; }
-    .whatsapp { --social-color: #49e879; }
-
-    .social-copy { min-width: 0; }
-
-    .social-label {
-      margin-bottom: 5px;
-      color: var(--muted);
-      font-size: clamp(7px, 0.47vw, 9px);
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: 0.17em;
-      text-transform: uppercase;
-    }
-
-    .social-value {
-      overflow: hidden;
-      color: #eef4ff;
-      font-size: clamp(8px, 0.58vw, 11px);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: 0.025em;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .brand-section {
-      justify-content: center;
-      overflow: visible;
-    }
-
-    .brand-frame {
-      position: absolute;
-      right: 22px;
-      bottom: 0;
-      left: 22px;
-      height: calc(100% + 26px);
-      background:
-        radial-gradient(circle at 50% 10%, rgba(168, 85, 247, 0.12), transparent 38%),
-        linear-gradient(180deg, rgba(12, 21, 38, 0.98), rgba(3, 8, 18, 0.99));
-      border-right: 1px solid rgba(34, 211, 238, 0.34);
-      border-left: 1px solid rgba(168, 85, 247, 0.38);
-      clip-path: polygon(0 22px, 22px 0, calc(50% - 62px) 0, calc(50% - 50px) 12px, calc(50% + 50px) 12px, calc(50% + 62px) 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
-      box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.035);
-    }
-
-    .brand-frame::after {
-      content: "";
-      position: absolute;
-      right: 12%;
-      bottom: 8px;
-      left: 12%;
-      height: 1px;
-      opacity: 0.75;
-      background: linear-gradient(90deg, transparent, var(--violet), var(--cyan), transparent);
-      box-shadow: 0 0 8px rgba(34, 211, 238, 0.26);
-    }
-
-    .brand-content {
-      position: relative;
-      z-index: 3;
-      height: 100%;
-      padding-top: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(12px, 1vw, 18px);
-    }
-
-    .brand-logo {
-      position: relative;
-      width: clamp(62px, 4.3vw, 80px);
-      height: clamp(62px, 4.3vw, 80px);
-      flex: 0 0 auto;
-      animation: logoBreathe 4s ease-in-out infinite;
-    }
-
-    .brand-logo::after {
-      content: "";
-      position: absolute;
-      right: 14%;
-      bottom: -4px;
-      left: 14%;
-      height: 10px;
-      opacity: 0.38;
-      background: linear-gradient(90deg, var(--violet), var(--cyan));
-      filter: blur(9px);
-    }
-
-    .brand-logo svg {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      display: block;
-      filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.35)) drop-shadow(0 0 8px rgba(34, 211, 238, 0.22));
-    }
-
-    .brand-copy { min-width: 0; }
-
-    .brand-name {
-      position: relative;
-      width: fit-content;
-      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Segoe UI Black", sans-serif;
-      font-size: clamp(25px, 2vw, 38px);
-      font-weight: 900;
-      font-style: italic;
-      line-height: 0.86;
-      letter-spacing: 0.065em;
-      transform: skewX(-5deg) scaleX(0.94);
-      transform-origin: left center;
-      background: linear-gradient(110deg, #ffffff 0%, #dbe6f4 26%, var(--violet-bright) 52%, #6689ff 72%, var(--cyan-bright) 100%);
-      background-size: 180% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 0.35px rgba(225, 241, 255, 0.42);
-      filter: drop-shadow(0 0 7px rgba(168, 85, 247, 0.16));
-      white-space: nowrap;
-      animation: wordmarkShine 7s ease-in-out infinite;
-    }
-
-    .brand-name::after {
-      content: "";
-      position: absolute;
-      right: 3%;
-      bottom: -6px;
-      left: 1%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--violet), var(--cyan), transparent);
-      clip-path: polygon(0 0, 100% 0, 92% 100%, 3% 100%);
-      box-shadow: 0 0 7px rgba(34, 211, 238, 0.3);
-    }
-
-    .brand-tagline {
-      margin-top: 8px;
-      color: #7f91ad;
-      font-size: clamp(6px, 0.47vw, 9px);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: 0.22em;
-      white-space: nowrap;
-    }
-
-    .brand-site {
-      margin-top: 7px;
-      color: #c9d5e6;
-      font-size: clamp(7px, 0.53vw, 10px);
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: 0.18em;
-      white-space: nowrap;
-    }
-
-    .live-section {
-      justify-content: flex-end;
-      padding: 12px clamp(18px, 2vw, 36px) 11px clamp(20px, 2.2vw, 40px);
-    }
-
-    .live-card {
-      width: min(100%, 430px);
-      min-width: 0;
-      animation: liveGlow 5.2s ease-in-out infinite;
-    }
-
-    .live-heading {
-      min-width: 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .status-pill {
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 9px;
-      color: #ff7891;
-      border: 1px solid rgba(255, 59, 100, 0.28);
-      border-radius: 999px;
-      background: rgba(255, 59, 100, 0.1);
-      font-size: clamp(7px, 0.5vw, 9px);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 10px rgba(255, 59, 100, 0.85);
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-
-    .live-title {
-      min-width: 0;
-      overflow: hidden;
-      font-family: "Arial Narrow", "Segoe UI", sans-serif;
-      font-size: clamp(19px, 1.55vw, 29px);
-      font-weight: 900;
-      font-style: italic;
-      line-height: 1;
-      letter-spacing: 0.025em;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      background: linear-gradient(100deg, #ffffff 0%, #dce8f7 40%, #51dff5 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .live-subtitle {
-      margin-top: 9px;
-      overflow: hidden;
-      color: var(--cyan-bright);
-      font-size: clamp(9px, 0.68vw, 13px);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: 0.12em;
-      text-overflow: ellipsis;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .live-description {
-      margin-top: 8px;
-      overflow: hidden;
-      color: #b8c4d5;
-      font-size: clamp(8px, 0.62vw, 12px);
-      font-weight: 600;
-      line-height: 1.15;
-      letter-spacing: 0.025em;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(0.82); opacity: 0.62; }
-      50% { transform: scale(1.15); opacity: 1; }
-    }
-
-    @keyframes logoBreathe {
-      0%, 100% { transform: translateY(1px) scale(0.99) rotate(-0.6deg); filter: brightness(1); }
-      50% { transform: translateY(-3px) scale(1.035) rotate(0.6deg); filter: brightness(1.14); }
-    }
-
-    @keyframes sweep {
-      0%, 18% { left: -18%; opacity: 0; }
-      28% { opacity: 0.65; }
-      52% { left: 108%; opacity: 0; }
-      100% { left: 108%; opacity: 0; }
-    }
-
-    @keyframes borderFlow {
-      from { background-position: 200% 50%; }
-      to { background-position: 0% 50%; }
-    }
-
-    @keyframes iconFloat {
-      0%, 100% { transform: translateY(1px); filter: brightness(0.96); }
-      50% { transform: translateY(-2px); filter: brightness(1.12); }
-    }
-
-    @keyframes wordmarkShine {
-      0%, 100% { background-position: 100% 50%; filter: drop-shadow(0 0 7px rgba(168, 85, 247, 0.16)); }
-      50% { background-position: 0% 50%; filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.22)); }
-    }
-
-    @keyframes liveGlow {
-      0%, 100% { filter: brightness(0.98); }
-      50% { filter: brightness(1.08); }
-    }
-
-    @media (max-width: 1180px), (max-height: 760px) {
-      .overlay { height: 132px; padding-right: 18px; padding-bottom: 10px; padding-left: 18px; }
-      .bar { height: 102px; grid-template-columns: minmax(0, 1fr) 330px minmax(0, 1fr); }
-      .social-section { padding-right: 15px; padding-left: 14px; }
-      .socials { gap: 8px; }
-      .social { grid-template-columns: 28px minmax(0, 1fr); gap: 7px; }
-      .social-icon { width: 28px; height: 28px; border-radius: 8px; }
-      .social-icon svg { width: 15px; height: 15px; }
-      .live-section { padding-right: 14px; padding-left: 18px; }
-      .brand-frame { right: 14px; left: 14px; }
-      .brand-logo { width: 62px; height: 62px; }
-    }
-
-    @media (max-width: 860px) {
-      .bar { grid-template-columns: minmax(0, 0.9fr) 250px minmax(0, 0.9fr); }
-      .socials { grid-template-columns: repeat(3, 1fr); }
-      .social { display: flex; justify-content: center; }
-      .social-copy { display: none; }
-      .brand-content { gap: 8px; }
-      .brand-logo { width: 52px; height: 52px; }
-      .brand-name { font-size: 22px; }
-      .brand-tagline { font-size: 5.5px; }
-      .brand-site { font-size: 6px; }
-      .status-pill { padding: 5px 7px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-      }
-    }
+    @media(max-width:1180px),(max-height:760px){.overlay{height:145px;padding:0 18px 10px}.rig{height:105px;grid-template-columns:minmax(0,1fr) 300px minmax(0,1fr)}.wing{height:90px}.left-wing{padding:11px 34px 9px 15px}.right-wing{padding:10px 15px 9px 34px}.social{grid-template-columns:30px minmax(0,1fr);gap:7px}.social-icon{width:30px;height:30px}.social-icon svg{width:15px;height:15px}.social-label{font-size:6px}.social-value{font-size:8px}.core{height:122px}.core-content{padding:10px 17px;gap:10px}.emblem{width:70px;height:70px}.emblem svg{width:60px;height:60px}.brand-name{font-size:25px}.tagline,.site{font-size:6px}.tagline{margin-top:11px}.title{font-size:20px}.subtitle,.description{font-size:8px}.status{font-size:6px;padding:5px 7px}.meter{margin-top:7px}}
+    @media(max-width:860px){.rig{grid-template-columns:minmax(0,1fr) 240px minmax(0,1fr)}.social-copy{display:none}.social{display:flex;justify-content:center}.emblem{width:58px;height:58px}.emblem svg{width:51px;height:51px}.brand-name{font-size:20px}.tagline{font-size:5px}.site{display:none}.live-top{gap:7px}.description{display:none}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important}}
   </style>
 </head>
 <body>
-  <main class="stage" aria-label="Veerzone premium stream overlay">
-    <section class="overlay">
-      <div class="ambient"></div>
-      <div class="bar">
-        <div class="section social-section">
-          <div class="socials">
-            <div class="social instagram">
-              <div class="social-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
-              </div>
-              <div class="social-copy"><div class="social-label">Instagram</div><div class="social-value">@veerzone_battles</div></div>
-            </div>
-            <div class="social youtube">
-              <div class="social-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
-              </div>
-              <div class="social-copy"><div class="social-label">YouTube</div><div class="social-value">@veerzone_official</div></div>
-            </div>
-            <div class="social whatsapp">
-              <div class="social-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20.4 11.7a8.4 8.4 0 0 1-12.5 7.4L3 20.4l1.4-4.6A8.4 8.4 0 1 1 20.4 11.7z"/><path d="M8.6 7.9c.3-.6.7-.6 1-.6h.4c.2 0 .5.1.6.5l.8 2c.1.3.1.6-.1.8l-.8 1c-.2.2-.1.5.1.8.5.9 1.3 1.7 2.3 2.2.3.2.6.2.8 0l1-.9c.2-.2.5-.2.8-.1l2 .9c.3.2.5.4.5.7 0 .4-.2 1.4-.8 2-.6.7-1.5 1-2.5.8-1.3-.2-2.9-.8-4.8-2.5-1.5-1.4-2.7-3-3.1-4.3-.5-1.5.1-2.6.8-3.3z"/></svg>
-              </div>
-              <div class="social-copy"><div class="social-label">WhatsApp</div><div class="social-value">9014122762</div></div>
-            </div>
-          </div>
+<main class="stage" aria-label="Veerzone professional stream overlay">
+  <section class="overlay">
+    <div class="ambient"></div>
+    <div class="rig">
+      <section class="wing left-wing">
+        <div class="cutline"></div><div class="scan"></div>
+        <div class="socials">
+          <div class="social instagram"><div class="social-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg></div><div class="social-copy"><div class="social-label">Instagram</div><div class="social-value">@veerzone_battles</div></div></div>
+          <div class="social youtube"><div class="social-icon"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></div><div class="social-copy"><div class="social-label">YouTube</div><div class="social-value">@veerzone_official</div></div></div>
+          <div class="social whatsapp"><div class="social-icon"><svg viewBox="0 0 24 24"><path d="M20.4 11.7a8.4 8.4 0 0 1-12.5 7.4L3 20.4l1.4-4.6A8.4 8.4 0 1 1 20.4 11.7z"/><path d="M8.6 7.9c.3-.6.7-.6 1-.6h.4c.2 0 .5.1.6.5l.8 2c.1.3.1.6-.1.8l-.8 1c-.2.2-.1.5.1.8.5.9 1.3 1.7 2.3 2.2.3.2.6.2.8 0l1-.9c.2-.2.5-.2.8-.1l2 .9c.3.2.5.4.5.7 0 .4-.2 1.4-.8 2-.6.7-1.5 1-2.5.8-1.3-.2-2.9-.8-4.8-2.5-1.5-1.4-2.7-3-3.1-4.3-.5-1.5.1-2.6.8-3.3z"/></svg></div><div class="social-copy"><div class="social-label">WhatsApp</div><div class="social-value">9014122762</div></div></div>
         </div>
+      </section>
 
-        <div class="section brand-section">
-          <div class="brand-frame"></div>
-          <div class="brand-content">
-            <div class="brand-logo" aria-hidden="true">
-              <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="vzOuter" x1="48" y1="35" x2="278" y2="284" gradientUnits="userSpaceOnUse"><stop stop-color="#b44cff"/><stop offset="0.48" stop-color="#6d5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-                  <linearGradient id="vzFill" x1="74" y1="68" x2="245" y2="258" gradientUnits="userSpaceOnUse"><stop stop-color="#f050ff"/><stop offset="0.45" stop-color="#7c3aed"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-                </defs>
-                <path d="M160 19L281 88V226L160 301L39 226V88L160 19Z" fill="#070b18" stroke="url(#vzOuter)" stroke-width="10"/>
-                <path d="M82 99H118L160 188L202 99H238L160 267L82 99Z" fill="url(#vzFill)" stroke="#9bdfff" stroke-opacity=".18" stroke-width="3"/>
-                <path d="M160 55L177 83L160 112L143 83L160 55Z" fill="#22d3ee" stroke="#b9f5ff" stroke-width="3"/>
-              </svg>
-            </div>
-            <div class="brand-copy">
-              <div class="brand-name">VEERZONE</div>
-              <div class="brand-tagline">BGMI COMPETITIVE ARENA</div>
-              <div class="brand-site" id="siteText">VEERZONE.COM</div>
-            </div>
-          </div>
+      <section class="core">
+        <div class="core-shell"></div>
+        <div class="core-content">
+          <div class="emblem" aria-hidden="true"><div class="emblem-aura"></div><div class="emblem-ring"></div><svg viewBox="0 0 320 320" fill="none"><defs><linearGradient id="outer" x1="48" y1="35" x2="278" y2="284" gradientUnits="userSpaceOnUse"><stop stop-color="#b44cff"/><stop offset=".48" stop-color="#6d5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient><linearGradient id="fill" x1="74" y1="68" x2="245" y2="258" gradientUnits="userSpaceOnUse"><stop stop-color="#f050ff"/><stop offset=".45" stop-color="#7c3aed"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><path d="M160 19L281 88V226L160 301L39 226V88L160 19Z" fill="#070b18" stroke="url(#outer)" stroke-width="10"/><path d="M82 99H118L160 188L202 99H238L160 267L82 99Z" fill="url(#fill)" stroke="#9bdfff" stroke-opacity=".18" stroke-width="3"/><path d="M160 55L177 83L160 112L143 83L160 55Z" fill="#22d3ee" stroke="#b9f5ff" stroke-width="3"/></svg></div>
+          <div class="brand"><div class="brand-name">VEERZONE</div><div class="tagline">BGMI COMPETITIVE ARENA</div><div class="site" id="siteText">VEERZONE.COM</div></div>
         </div>
+      </section>
 
-        <div class="section live-section">
-          <div class="live-card">
-            <div class="live-heading">
-              <div class="status-pill"><span class="live-dot"></span><span id="statusText">LIVE</span></div>
-              <div class="live-title" id="titleText">LIVE MATCHES</div>
-            </div>
-            <div class="live-subtitle" id="subtitleText">CLASSICS &amp; TDMs</div>
-            <div class="live-description" id="descriptionText">Daily TDMs • Weekly Classics</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    (() => {
-      const params = new URLSearchParams(window.location.search);
-      const fields = {
-        title: ["titleText", "LIVE MATCHES"],
-        subtitle: ["subtitleText", "CLASSICS & TDMs"],
-        description: ["descriptionText", "Daily TDMs • Weekly Classics"],
-        status: ["statusText", "LIVE"],
-        site: ["siteText", "VEERZONE.COM"]
-      };
-
-      Object.entries(fields).forEach(([key, [id, fallback]]) => {
-        const element = document.getElementById(id);
-        const value = params.get(key)?.trim();
-        if (element) element.textContent = value || fallback;
-      });
-    })();
-  </script>
+      <section class="wing right-wing">
+        <div class="cutline"></div><div class="scan" style="animation-delay:-3.5s"></div>
+        <div class="live-card"><div class="live-top"><div class="status"><span class="dot"></span><span id="statusText">LIVE</span></div><div class="title" id="titleText">LIVE MATCHES</div></div><div class="subtitle" id="subtitleText">CLASSICS &amp; TDMs</div><div class="description" id="descriptionText">Daily TDMs • Weekly Classics</div><div class="meter"><i></i><i></i><i></i><i></i><i></i></div></div>
+      </section>
+    </div>
+  </section>
+</main>
+<script>
+(()=>{const p=new URLSearchParams(location.search);const f={title:["titleText","LIVE MATCHES"],subtitle:["subtitleText","CLASSICS & TDMs"],description:["descriptionText","Daily TDMs • Weekly Classics"],status:["statusText","LIVE"],site:["siteText","VEERZONE.COM"]};Object.entries(f).forEach(([k,[id,d]])=>{const e=document.getElementById(id),v=p.get(k)?.trim();if(e)e.textContent=v||d})})();
+</script>
 </body>
 </html>
