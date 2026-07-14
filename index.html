@@ -6,48 +6,42 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>Veerzone StreamChamp Bottom Overlay</title>
+  <title>Veerzone StreamChamp Full Bottom Overlay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: rgba(3, 5, 13, 0.96);
-      --panel: rgba(6, 10, 22, 0.97);
-      --panel-2: rgba(8, 13, 28, 0.98);
       --violet: #a855f7;
-      --violet-deep: #6d28d9;
+      --violet2: #7c3aed;
       --cyan: #22d3ee;
       --blue: #2563eb;
+      --bg1: rgba(9, 14, 28, 0.98);
+      --bg2: rgba(4, 7, 15, 0.99);
       --white: #f8fbff;
-      --muted: #c7d2e3;
     }
 
     * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
+      margin: 0;
       width: 100%;
       height: 100%;
-      margin: 0;
       overflow: hidden;
       background: transparent !important;
     }
 
     body {
-      color: var(--white);
       font-family: "Rajdhani", Arial, sans-serif;
+      color: var(--white);
       pointer-events: none;
     }
 
     .stage {
       position: fixed;
       inset: 0;
-      width: 100vw;
-      height: 100vh;
       background: transparent;
       overflow: hidden;
-      isolation: isolate;
     }
 
     .overlay {
@@ -55,292 +49,268 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: clamp(275px, 30vh, 340px);
-      z-index: 2;
+      height: 250px;
       display: grid;
-      grid-template-columns: 34% 31% 35%;
+      grid-template-columns: 1.12fr 1.18fr 1.12fr;
       align-items: end;
-      padding: 0 clamp(10px, 1.1vw, 22px) clamp(10px, 1.4vh, 18px);
+      gap: 0;
+      z-index: 4;
     }
 
     .beam {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 286px;
+      bottom: 183px;
       height: 2px;
       background: linear-gradient(90deg,
-        rgba(168,85,247,0),
-        rgba(168,85,247,0.95) 18%,
-        rgba(124,58,237,0.75) 43%,
-        rgba(34,211,238,0.86) 69%,
-        rgba(34,211,238,0));
-      box-shadow: 0 0 10px rgba(168,85,247,0.42), 0 0 14px rgba(34,211,238,0.28);
-      z-index: 1;
-      opacity: 0.92;
+        rgba(168,85,247,0.95) 0%,
+        rgba(124,58,237,0.82) 38%,
+        rgba(34,211,238,0.82) 62%,
+        rgba(34,211,238,0.95) 100%);
+      box-shadow: 0 0 10px rgba(168,85,247,0.35), 0 0 12px rgba(34,211,238,0.28);
+      z-index: 2;
     }
 
     .panel {
       position: relative;
-      height: 250px;
+      height: 110px;
       display: flex;
       align-items: center;
-      background:
-        linear-gradient(180deg, rgba(13, 18, 36, 0.96), rgba(3, 6, 15, 0.99)),
-        var(--panel);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.025),
-        0 20px 48px rgba(0,0,0,0.55);
+      justify-content: center;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      border-top: 2px solid rgba(255,255,255,0.05);
+      border-bottom: 2px solid rgba(255,255,255,0.04);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 -10px 30px rgba(0,0,0,0.22);
       overflow: visible;
-    }
-
-    .left-panel {
-      margin-right: -7px;
-      padding: 62px 28px 26px 38px;
-      clip-path: polygon(0 18%, 4% 18%, 8% 0, 88% 0, 94% 16%, 100% 16%, 100% 88%, 96% 100%, 8% 100%, 3% 82%, 0 82%);
-      border-left: 3px solid rgba(168,85,247,0.92);
-      border-top: 2px solid rgba(168,85,247,0.85);
-      border-bottom: 2px solid rgba(124,58,237,0.65);
-      box-shadow: inset 0 0 0 1px rgba(168,85,247,0.08), 0 0 24px rgba(124,58,237,0.18);
-    }
-
-    .center-panel {
-      z-index: 3;
-      height: 286px;
-      margin: 0 -9px;
-      padding: 118px 30px 24px;
-      justify-content: center;
-      text-align: center;
-      clip-path: polygon(6% 18%, 15% 18%, 20% 0, 80% 0, 85% 18%, 94% 18%, 100% 33%, 100% 88%, 94% 100%, 6% 100%, 0 88%, 0 33%);
-      border-top: 2px solid rgba(168,85,247,0.75);
-      border-left: 2px solid rgba(168,85,247,0.72);
-      border-right: 2px solid rgba(34,211,238,0.72);
-      border-bottom: 2px solid rgba(34,211,238,0.45);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.025),
-        0 0 30px rgba(124,58,237,0.20),
-        0 0 28px rgba(34,211,238,0.12);
-    }
-
-    .right-panel {
-      margin-left: -7px;
-      padding: 62px 42px 28px 38px;
-      justify-content: center;
-      text-align: center;
-      clip-path: polygon(0 16%, 6% 16%, 12% 0, 92% 0, 97% 18%, 100% 18%, 100% 82%, 96% 82%, 92% 100%, 8% 100%, 0 88%);
-      border-right: 3px solid rgba(34,211,238,0.95);
-      border-top: 2px solid rgba(34,211,238,0.75);
-      border-bottom: 2px solid rgba(37,99,235,0.55);
-      box-shadow: inset 0 0 0 1px rgba(34,211,238,0.06), 0 0 24px rgba(34,211,238,0.14);
     }
 
     .panel::before {
       content: "";
       position: absolute;
-      inset: 13px 16px;
-      pointer-events: none;
-      opacity: 0.16;
+      inset: 10px 18px;
+      opacity: 0.12;
       background-image:
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 34px 34px;
-      mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
     }
 
-    .left-panel::after,
-    .right-panel::after,
-    .center-panel::after {
-      content: "";
+    .left {
+      border-left: 3px solid rgba(168,85,247,0.95);
+      border-top: 2px solid rgba(168,85,247,0.85);
+      clip-path: polygon(0 18px, calc(100% - 28px) 18px, calc(100% - 14px) 0, 100% 0, 100% 100%, 0 100%);
+      padding: 14px 16px 12px 20px;
+    }
+
+    .center {
+      height: 126px;
+      z-index: 5;
+      border-top: 2px solid rgba(168,85,247,0.84);
+      border-left: 2px solid rgba(168,85,247,0.62);
+      border-right: 2px solid rgba(34,211,238,0.62);
+      border-bottom: 2px solid rgba(34,211,238,0.35);
+      clip-path: polygon(0 18px, 30px 18px, 44px 0, calc(100% - 44px) 0, calc(100% - 30px) 18px, 100% 18px, 100% 100%, 0 100%);
+      padding: 50px 16px 10px;
+      margin-top: -16px;
+    }
+
+    .right {
+      border-right: 3px solid rgba(34,211,238,0.95);
+      border-top: 2px solid rgba(34,211,238,0.84);
+      clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 0);
+      padding: 14px 20px 12px 16px;
+    }
+
+    .edge-left, .edge-right {
       position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 10px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--violet), transparent);
-      box-shadow: 0 0 12px rgba(168,85,247,0.65);
-      opacity: 0.85;
+      bottom: 0;
+      height: 110px;
+      width: 42px;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      z-index: 3;
     }
 
-    .right-panel::after {
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      box-shadow: 0 0 12px rgba(34,211,238,0.60);
+    .edge-left {
+      left: 0;
+      border-top: 2px solid rgba(168,85,247,0.85);
+      border-left: 3px solid rgba(168,85,247,0.95);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
     }
 
-    .center-panel::after {
-      background: linear-gradient(90deg, var(--violet), var(--cyan));
-      box-shadow: 0 0 14px rgba(34,211,238,0.40);
-      opacity: 0.65;
+    .edge-right {
+      right: 0;
+      border-top: 2px solid rgba(34,211,238,0.85);
+      border-right: 3px solid rgba(34,211,238,0.95);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
     }
 
-    .socials {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      align-items: center;
-    }
-
-    .social {
-      min-width: 0;
-      padding: 0 12px;
-      text-align: center;
-      border-right: 1px solid rgba(168,85,247,0.70);
-    }
-
-    .social:last-child { border-right: 0; }
-
-    .social svg {
-      width: 49px;
-      height: 49px;
-      display: block;
-      margin: 0 auto 10px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      filter: drop-shadow(0 0 8px currentColor);
-    }
-
-    .social.instagram { color: #b45cff; }
-    .social.youtube { color: #a855f7; }
-    .social.whatsapp { color: #21d4f5; }
-
-    .social-label {
-      color: #ffffff;
-      font-size: clamp(17px, 1.1vw, 22px);
-      font-weight: 500;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .social-value {
-      color: #f7f8ff;
-      font-size: clamp(14px, 0.92vw, 18px);
-      font-weight: 700;
-      line-height: 1.1;
-      white-space: nowrap;
-      letter-spacing: 0.01em;
-    }
-
-    .brand-stack {
-      position: relative;
-      z-index: 4;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    .logo-badge {
+    .logo-holder {
       position: absolute;
       left: 50%;
-      bottom: 290px;
-      width: 206px;
-      height: 206px;
+      bottom: 106px;
       transform: translateX(-50%);
+      width: 134px;
+      height: 134px;
+      z-index: 7;
       display: grid;
       place-items: center;
-      filter: drop-shadow(0 0 20px rgba(168,85,247,0.48)) drop-shadow(0 0 16px rgba(34,211,238,0.30));
-      z-index: 8;
+      filter: drop-shadow(0 0 18px rgba(168,85,247,0.44)) drop-shadow(0 0 12px rgba(34,211,238,0.28));
     }
 
-    .logo-badge svg {
+    .logo-holder::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 16px;
+      background: linear-gradient(90deg, rgba(168,85,247,0.9), rgba(34,211,238,0.9));
+      filter: blur(10px);
+      opacity: 0.45;
+    }
+
+    .logo-svg {
       width: 100%;
       height: 100%;
       display: block;
     }
 
-    .brand-name {
-      margin-top: 8px;
-      font-family: "Orbitron", Arial, sans-serif;
-      font-size: clamp(48px, 4vw, 78px);
-      font-weight: 900;
-      line-height: 0.92;
-      letter-spacing: -0.03em;
-      font-style: italic;
-      background: linear-gradient(105deg, #a855f7 2%, #7c3aed 33%, #4f7cff 62%, #22d3ee 94%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 26px rgba(124,58,237,0.16);
-      white-space: nowrap;
-    }
-
-    .register-line {
-      margin-top: 18px;
-      display: flex;
+    .socials {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       align-items: center;
-      gap: 18px;
-      font-family: "Orbitron", Arial, sans-serif;
-      font-size: clamp(14px, 1.1vw, 20px);
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      color: #67dcff;
+      text-align: center;
+      gap: 0;
+    }
+
+    .social {
+      padding: 0 8px;
+      border-right: 1px solid rgba(168,85,247,0.55);
+    }
+
+    .social:last-child { border-right: 0; }
+
+    .social svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+      margin: 0 auto 6px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 6px currentColor);
+    }
+
+    .instagram { color: #b45cff; }
+    .youtube { color: #a855f7; }
+    .whatsapp { color: #21d4f5; }
+
+    .social-label {
+      font-size: 12px;
+      line-height: 1;
+      margin-bottom: 4px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .social-value {
+      font-size: 11px;
+      line-height: 1.1;
+      color: #f7f8ff;
+      font-weight: 700;
       white-space: nowrap;
-      text-transform: uppercase;
     }
 
-    .register-line::before,
-    .register-line::after {
-      content: "";
-      width: clamp(28px, 3vw, 68px);
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--violet));
-      box-shadow: 0 0 9px rgba(168,85,247,0.56);
-    }
-
-    .register-line::after {
-      background: linear-gradient(90deg, var(--cyan), transparent);
-      box-shadow: 0 0 9px rgba(34,211,238,0.52);
-    }
-
-    .match-stack {
+    .brand-stack, .match-stack {
       position: relative;
-      z-index: 2;
+      z-index: 6;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .brand-name {
+      font-family: "Orbitron", Arial, sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 32px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      background: linear-gradient(105deg, #b45cff 0%, #7c3aed 34%, #4d7cff 60%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .register-line {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Orbitron", Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: #63dbff;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+
+    .register-line::before, .register-line::after {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--violet));
+      box-shadow: 0 0 8px rgba(168,85,247,0.45);
+    }
+
+    .register-line::after {
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      box-shadow: 0 0 8px rgba(34,211,238,0.45);
     }
 
     .live-title {
       font-family: "Orbitron", Arial, sans-serif;
-      font-size: clamp(38px, 3vw, 58px);
       font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
       font-style: italic;
-      background: linear-gradient(100deg, #4b7cff, #22d3ee 72%);
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      background: linear-gradient(100deg, #4e7dff, #22d3ee 76%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      white-space: nowrap;
-      text-shadow: 0 0 20px rgba(34,211,238,0.12);
     }
 
     .match-subtitle {
-      margin-top: 17px;
+      margin-top: 8px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       color: #35d8f5;
-      font-size: clamp(20px, 1.45vw, 28px);
+      font-size: 12px;
       font-weight: 700;
       line-height: 1;
       white-space: nowrap;
     }
 
-    .match-subtitle::before,
-    .match-subtitle::after {
+    .match-subtitle::before, .match-subtitle::after {
       content: "";
-      width: clamp(34px, 4vw, 78px);
+      width: 28px;
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--cyan));
-      box-shadow: 0 0 10px rgba(34,211,238,0.44);
+      box-shadow: 0 0 8px rgba(34,211,238,0.45);
     }
 
     .match-subtitle::after {
@@ -348,111 +318,64 @@
     }
 
     .match-description {
-      margin-top: 15px;
+      margin-top: 7px;
       color: rgba(255,255,255,0.90);
-      font-size: clamp(16px, 1.08vw, 21px);
-      font-weight: 500;
+      font-size: 10px;
       line-height: 1;
       white-space: nowrap;
+      font-weight: 500;
     }
 
-    .micro-cuts {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .cut {
-      position: absolute;
-      height: 5px;
-      background: linear-gradient(90deg, var(--violet), transparent);
-      transform: skewX(-28deg);
-      opacity: 0.85;
-    }
-
-    .cut.c1 { left: 25%; bottom: 195px; width: 82px; }
-    .cut.c2 { left: 31%; bottom: 12px; width: 64px; }
-    .cut.c3 { right: 28%; bottom: 194px; width: 92px; background: linear-gradient(90deg, transparent, var(--cyan)); }
-    .cut.c4 { right: 32%; bottom: 12px; width: 66px; background: linear-gradient(90deg, transparent, var(--cyan)); }
-
-    @keyframes breathe {
-      0%, 100% { filter: brightness(0.95); }
-      50% { filter: brightness(1.12); }
-    }
-
-    .overlay { animation: breathe 4s ease-in-out infinite; }
-
-    @media (max-width: 1280px) {
-      .overlay {
-        grid-template-columns: 1fr 1.1fr 1fr;
-        height: 220px;
-      }
-
-      .panel { height: 155px; }
-      .center-panel { height: 178px; padding-top: 58px; }
-      .logo-badge { bottom: 168px; width: 156px; height: 156px; }
-      .social { padding: 0 10px; }
-      .social svg { width: 38px; height: 38px; margin-bottom: 7px; }
-      .left-panel { padding: 38px 18px 18px 24px; }
-      .right-panel { padding: 36px 24px 18px; }
-    }
-
-    @media (max-width: 900px) {
-      .overlay {
-        grid-template-columns: 1fr 1.06fr 1fr;
-        height: 180px;
-        padding-inline: 4px;
-      }
-
-      .panel { height: 125px; }
-      .center-panel { height: 145px; padding: 52px 10px 12px; }
-      .left-panel { padding: 28px 8px 10px; }
-      .right-panel { padding: 28px 8px 10px; }
-      .logo-badge { bottom: 124px; width: 122px; height: 122px; }
-      .social { padding: 0 5px; }
-      .social svg { width: 28px; height: 28px; margin-bottom: 4px; }
-      .social-label { font-size: 12px; margin-bottom: 4px; }
-      .social-value { font-size: 11px; }
-      .brand-name { font-size: 34px; }
-      .register-line { font-size: 9px; gap: 7px; margin-top: 9px; }
-      .live-title { font-size: 27px; }
-      .match-subtitle { font-size: 13px; margin-top: 9px; gap: 5px; }
-      .match-description { font-size: 10px; margin-top: 8px; }
+    @media (min-width: 1600px) {
+      .overlay { height: 290px; }
+      .beam { bottom: 208px; }
+      .panel { height: 128px; }
+      .center { height: 144px; padding-top: 58px; }
+      .edge-left, .edge-right { height: 128px; width: 52px; }
+      .logo-holder { width: 152px; height: 152px; bottom: 122px; }
+      .social svg { width: 34px; height: 34px; margin-bottom: 8px; }
+      .social-label { font-size: 14px; }
+      .social-value { font-size: 13px; }
+      .brand-name { font-size: 42px; }
+      .register-line { font-size: 12px; }
+      .live-title { font-size: 36px; }
+      .match-subtitle { font-size: 15px; }
+      .match-description { font-size: 12px; }
     }
   </style>
 </head>
 <body>
-  <main class="stage" aria-label="Veerzone StreamChamp bottom overlay">
+  <main class="stage">
     <div class="beam"></div>
+    <div class="edge-left"></div>
+    <div class="edge-right"></div>
 
-    <section class="overlay">
-      <div class="logo-badge" aria-hidden="true">
-        <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="vzOuter" x1="48" y1="35" x2="278" y2="284" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#b44cff" />
-              <stop offset="0.48" stop-color="#6d5cff" />
-              <stop offset="1" stop-color="#22d3ee" />
-            </linearGradient>
-            <linearGradient id="vzFill" x1="74" y1="68" x2="245" y2="258" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#f050ff" />
-              <stop offset="0.45" stop-color="#7c3aed" />
-              <stop offset="1" stop-color="#22d3ee" />
-            </linearGradient>
-            <filter id="vzGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <path d="M160 19L281 88V226L160 301L39 226V88L160 19Z" fill="#070b18" stroke="url(#vzOuter)" stroke-width="10" filter="url(#vzGlow)" />
-          <path d="M82 99H118L160 188L202 99H238L160 267L82 99Z" fill="url(#vzFill)" stroke="#9bdfff" stroke-opacity=".18" stroke-width="3" />
-          <path d="M160 55L177 83L160 112L143 83L160 55Z" fill="#22d3ee" stroke="#b9f5ff" stroke-width="3" />
-          <path d="M112 111L160 210L208 111" stroke="rgba(255,255,255,.38)" stroke-width="3" />
-        </svg>
-      </div>
+    <div class="logo-holder" aria-hidden="true">
+      <svg class="logo-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="vzOuter" x1="48" y1="35" x2="278" y2="284" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#b44cff" />
+            <stop offset="0.48" stop-color="#6d5cff" />
+            <stop offset="1" stop-color="#22d3ee" />
+          </linearGradient>
+          <linearGradient id="vzFill" x1="74" y1="68" x2="245" y2="258" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#f050ff" />
+            <stop offset="0.45" stop-color="#7c3aed" />
+            <stop offset="1" stop-color="#22d3ee" />
+          </linearGradient>
+          <filter id="vzGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M160 19L281 88V226L160 301L39 226V88L160 19Z" fill="#070b18" stroke="url(#vzOuter)" stroke-width="10" filter="url(#vzGlow)" />
+        <path d="M82 99H118L160 188L202 99H238L160 267L82 99Z" fill="url(#vzFill)" stroke="#9bdfff" stroke-opacity=".18" stroke-width="3" />
+        <path d="M160 55L177 83L160 112L143 83L160 55Z" fill="#22d3ee" stroke="#b9f5ff" stroke-width="3" />
+      </svg>
+    </div>
 
-      <article class="panel left-panel" aria-label="Veerzone social links">
+    <section class="overlay" aria-label="Veerzone full width bottom overlay">
+      <article class="panel left">
         <div class="socials">
           <div class="social instagram">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -463,7 +386,6 @@
             <div class="social-label">Instagram</div>
             <div class="social-value">@veerzone_battles</div>
           </div>
-
           <div class="social youtube">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect>
@@ -472,7 +394,6 @@
             <div class="social-label">YouTube</div>
             <div class="social-value">@veerzone_official</div>
           </div>
-
           <div class="social whatsapp">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3 20.5l1.4-4.7A8.5 8.5 0 1 1 20.5 11.6z"></path>
@@ -484,27 +405,20 @@
         </div>
       </article>
 
-      <article class="panel center-panel" aria-label="Veerzone brand">
+      <article class="panel center">
         <div class="brand-stack">
           <div class="brand-name">VEERZONE</div>
           <div class="register-line">REGISTER IN VEERZONE.COM</div>
         </div>
       </article>
 
-      <article class="panel right-panel" aria-label="Live match information">
+      <article class="panel right">
         <div class="match-stack">
           <div class="live-title">LIVE MATCHES</div>
           <div class="match-subtitle">Classic's and TDM's</div>
           <div class="match-description">Daily TDM's and Weekly Classics</div>
         </div>
       </article>
-
-      <div class="micro-cuts" aria-hidden="true">
-        <span class="cut c1"></span>
-        <span class="cut c2"></span>
-        <span class="cut c3"></span>
-        <span class="cut c4"></span>
-      </div>
     </section>
   </main>
 </body>
