@@ -12,7 +12,7 @@
   <style>
     :root{
       --ink:#02050c;--panel:#060b16;--panel2:#0a1423;--white:#f7fbff;--muted:#8090aa;
-      --violet:#a855f7;--purple:#7038ff;--cyan:#22d3ee;--ice:#94f5ff;--live:#ff315e;--safe-bottom:22px;
+      --violet:#a855f7;--purple:#7038ff;--cyan:#22d3ee;--ice:#94f5ff;--live:#ff315e;--safe-bottom:18px;
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:100%;margin:0;overflow:hidden;background:transparent!important}
@@ -22,12 +22,7 @@
     .ambient{position:absolute;left:4%;right:4%;bottom:-75px;height:205px;z-index:-2;opacity:.52;filter:blur(28px);background:radial-gradient(ellipse at 22% 100%,rgba(112,56,255,.3),transparent 44%),radial-gradient(ellipse at 78% 100%,rgba(34,211,238,.25),transparent 44%)}
     .rig{position:relative;width:100%;height:120px;display:grid;grid-template-columns:minmax(0,1fr) clamp(390px,29vw,540px) minmax(0,1fr);align-items:end;filter:drop-shadow(0 -14px 28px rgba(0,0,0,.36))}
     .rig::before{content:"";position:absolute;left:0;right:0;bottom:0;height:126px;z-index:-2;background:linear-gradient(180deg,rgba(10,19,34,.98),rgba(2,6,14,.995));border-top:1px solid rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
-    .rig::after{content:"";position:absolute;left:0;right:0;bottom:var(--safe-bottom);height:2px;z-index:12;background:linear-gradient(90deg,var(--violet),rgba(112,56,255,.18) 35%,rgba(34,211,238,.18) 65%,var(--cyan));background-size:200% 100%;box-shadow:0 0 10px rgba(112,56,255,.3);animation:energyFlow 6s linear infinite}
-
-    .corner-fin{position:absolute;bottom:var(--safe-bottom);z-index:20;width:126px;height:38px;overflow:hidden;filter:drop-shadow(0 0 8px rgba(112,56,255,.3))}
-    .corner-fin::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.35),rgba(6,12,24,.98) 42%,rgba(34,211,238,.08));border-top:2px solid var(--violet);clip-path:polygon(0 0,100% 0,78% 100%,0 100%)}
-    .corner-fin::after{content:"";position:absolute;top:9px;left:14px;width:72px;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan),transparent);box-shadow:0 0 8px rgba(34,211,238,.45);animation:cornerCharge 3.6s ease-in-out infinite}
-    .corner-left{left:0}.corner-right{right:0;transform:scaleX(-1)}
+    .rig::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;z-index:12;background:linear-gradient(90deg,var(--violet),rgba(112,56,255,.18) 35%,rgba(34,211,238,.18) 65%,var(--cyan));background-size:200% 100%;box-shadow:0 0 10px rgba(112,56,255,.3);animation:energyFlow 6s linear infinite}
 
     .wing{position:relative;z-index:1;height:104px;min-width:0;overflow:hidden;transform:translateY(calc(0px - var(--safe-bottom)));background:linear-gradient(180deg,rgba(12,22,39,.97),rgba(3,8,17,.985));border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.06)}
     .wing::before{content:"";position:absolute;top:0;height:2px;width:72%;background-size:200% 100%;animation:energyFlow 4.8s linear infinite}
@@ -76,9 +71,8 @@
     @keyframes livePulse{0%,100%{transform:scale(.78);opacity:.6}50%{transform:scale(1.18);opacity:1}}
     @keyframes liveBreathe{0%,100%{filter:brightness(.98)}50%{filter:brightness(1.08)}}
     @keyframes meter{0%,100%{background:#28354a;box-shadow:none}50%{background:var(--cyan);box-shadow:0 0 7px rgba(34,211,238,.6)}}
-    @keyframes cornerCharge{0%,100%{transform:translateX(-8px);opacity:.45}50%{transform:translateX(18px);opacity:1}}
 
-    @media(max-width:1180px),(max-height:760px){:root{--safe-bottom:26px}.overlay{height:158px}.rig{height:118px;grid-template-columns:minmax(0,1fr) 340px minmax(0,1fr)}.rig::before{height:116px}.wing{height:90px}.left-wing{padding:11px 38px 9px 20px}.right-wing{padding:10px 20px 9px 38px}.social{grid-template-columns:34px minmax(0,1fr);gap:9px}.social-icon{width:34px;height:34px}.social-icon svg{width:17px;height:17px}.social-label{font-size:8px}.social-value{font-size:11px}.core{height:126px;margin-right:-24px;margin-left:-24px}.core-content{padding:10px 20px;gap:12px}.emblem{width:72px;height:72px}.emblem svg{width:62px;height:62px}.brand-name{font-size:28px}.tagline,.site{font-size:7px}.tagline{margin-top:11px}.live-card{width:min(92%,430px);padding:0 16px}.title{font-size:24px}.subtitle,.description{font-size:10px}.status{font-size:7px;padding:6px 8px}.meter{margin-top:8px;width:124px}.corner-fin{width:94px;height:32px}}
+    @media(max-width:1180px),(max-height:760px){:root{--safe-bottom:20px}.overlay{height:152px}.rig{height:112px;grid-template-columns:minmax(0,1fr) 340px minmax(0,1fr)}.rig::before{height:110px}.wing{height:90px}.left-wing{padding:11px 38px 9px 20px}.right-wing{padding:10px 20px 9px 38px}.social{grid-template-columns:34px minmax(0,1fr);gap:9px}.social-icon{width:34px;height:34px}.social-icon svg{width:17px;height:17px}.social-label{font-size:8px}.social-value{font-size:11px}.core{height:126px;margin-right:-24px;margin-left:-24px}.core-content{padding:10px 20px;gap:12px}.emblem{width:72px;height:72px}.emblem svg{width:62px;height:62px}.brand-name{font-size:28px}.tagline,.site{font-size:7px}.tagline{margin-top:11px}.live-card{width:min(92%,430px);padding:0 16px}.title{font-size:24px}.subtitle,.description{font-size:10px}.status{font-size:7px;padding:6px 8px}.meter{margin-top:8px;width:124px}}
     @media(max-width:860px){.rig{grid-template-columns:minmax(0,1fr) 240px minmax(0,1fr)}.social-copy{display:none}.social{display:flex;justify-content:center}.emblem{width:58px;height:58px}.emblem svg{width:51px;height:51px}.brand-name{font-size:20px}.tagline{font-size:5px}.site{display:none}.live-top{gap:7px}.description{display:none}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important}}
   </style>
@@ -87,7 +81,6 @@
 <main class="stage" aria-label="Veerzone professional stream overlay">
   <section class="overlay">
     <div class="ambient"></div>
-    <div class="corner-fin corner-left"></div><div class="corner-fin corner-right"></div>
     <div class="rig">
       <section class="wing left-wing">
         <div class="cutline"></div><div class="scan"></div>
