@@ -6,352 +6,84 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>Veerzone StreamChamp Full Bottom Overlay</title>
+  <title>Veerzone Premium Stream Overlay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --violet: #a855f7;
-      --violet2: #7c3aed;
-      --cyan: #22d3ee;
-      --blue: #2563eb;
-      --bg1: rgba(9, 14, 28, 0.98);
-      --bg2: rgba(4, 7, 15, 0.99);
-      --white: #f8fbff;
+      --violet:#a855f7;
+      --violet2:#7c3aed;
+      --cyan:#22d3ee;
+      --blue:#2563eb;
+      --white:#f8fbff;
+      --muted:#aebbd0;
+      --ink:rgba(3,6,15,.985);
     }
 
-    * { box-sizing: border-box; }
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:transparent!important}
+    body{font-family:"Rajdhani",Arial,sans-serif;color:var(--white);pointer-events:none}
 
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: transparent !important;
-    }
+    .stage{position:fixed;inset:0;overflow:hidden;background:transparent;isolation:isolate}
+    .ambient{position:absolute;left:0;right:0;bottom:0;height:245px;background:radial-gradient(ellipse at 18% 100%,rgba(124,58,237,.18),transparent 48%),radial-gradient(ellipse at 82% 100%,rgba(34,211,238,.15),transparent 48%);filter:blur(4px)}
 
-    body {
-      font-family: "Rajdhani", Arial, sans-serif;
-      color: var(--white);
-      pointer-events: none;
-    }
+    .rail{position:absolute;left:0;right:0;bottom:0;height:154px;z-index:2;display:grid;grid-template-columns:35% 30% 35%;background:linear-gradient(90deg,rgba(168,85,247,.075),transparent 28%,transparent 72%,rgba(34,211,238,.075)),linear-gradient(180deg,rgba(10,16,32,.97),var(--ink));border-top:1px solid rgba(255,255,255,.08);box-shadow:0 -18px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
+    .rail::before{content:"";position:absolute;left:0;right:0;top:-2px;height:3px;background:linear-gradient(90deg,var(--violet),rgba(168,85,247,.84) 20%,rgba(124,58,237,.22) 42%,rgba(34,211,238,.22) 58%,rgba(34,211,238,.88) 80%,var(--cyan));box-shadow:0 0 14px rgba(168,85,247,.35),0 0 14px rgba(34,211,238,.3)}
+    .rail::after{content:"";position:absolute;inset:0;opacity:.11;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(90deg,#000,transparent 20%,transparent 80%,#000);pointer-events:none}
 
-    .stage {
-      position: fixed;
-      inset: 0;
-      background: transparent;
-      overflow: hidden;
-    }
+    .section{position:relative;z-index:3;min-width:0;height:100%;display:flex;align-items:center}
+    .left-section{padding:20px 38px 16px 44px}
+    .right-section{padding:20px 44px 16px 40px;justify-content:flex-end}
+    .left-section::after,.right-section::before{content:"";position:absolute;top:31px;bottom:22px;width:1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.13),transparent)}
+    .left-section::after{right:10px}.right-section::before{left:10px}
 
-    .overlay {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 250px;
-      display: grid;
-      grid-template-columns: 1.12fr 1.18fr 1.12fr;
-      align-items: end;
-      gap: 0;
-      z-index: 4;
-    }
+    .socials{width:100%;max-width:620px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .social{min-width:0;height:78px;display:grid;grid-template-columns:40px 1fr;align-items:center;column-gap:12px;padding:10px 12px;border:1px solid rgba(255,255,255,.065);background:linear-gradient(180deg,rgba(255,255,255,.036),rgba(255,255,255,.012));clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));box-shadow:inset 0 0 0 1px rgba(255,255,255,.016)}
+    .social-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(3,6,15,.65);border:1px solid currentColor}
+    .instagram .social-icon{box-shadow:0 0 14px rgba(179,92,255,.24)}
+    .youtube .social-icon{box-shadow:0 0 14px rgba(156,100,255,.24)}
+    .whatsapp .social-icon{box-shadow:0 0 14px rgba(34,211,238,.24)}
+    .social svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .instagram{color:#b35cff}.youtube{color:#9c64ff}.whatsapp{color:#22d3ee}
+    .social-copy{min-width:0}
+    .social-label{color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;line-height:1;margin-bottom:6px}
+    .social-value{color:var(--white);font-size:15px;font-weight:700;letter-spacing:.015em;line-height:1;white-space:nowrap}
 
-    .beam {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 183px;
-      height: 2px;
-      background: linear-gradient(90deg,
-        rgba(168,85,247,0.95) 0%,
-        rgba(124,58,237,0.82) 38%,
-        rgba(34,211,238,0.82) 62%,
-        rgba(34,211,238,0.95) 100%);
-      box-shadow: 0 0 10px rgba(168,85,247,0.35), 0 0 12px rgba(34,211,238,0.28);
-      z-index: 2;
-    }
+    .center-section{z-index:5;align-items:flex-end;justify-content:center;padding:0 20px 18px}
+    .center-plinth{position:absolute;left:2px;right:2px;top:-31px;bottom:0;z-index:0;background:linear-gradient(180deg,rgba(14,20,40,.99),rgba(5,8,18,.99));border:1px solid rgba(255,255,255,.08);border-top-color:rgba(168,85,247,.45);clip-path:polygon(38px 31px,74px 31px,91px 0,calc(100% - 91px) 0,calc(100% - 74px) 31px,calc(100% - 38px) 31px,100% 64px,100% 100%,0 100%,0 64px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 -12px 28px rgba(124,58,237,.1)}
+    .center-plinth::before{content:"";position:absolute;left:18%;right:18%;top:30px;height:2px;background:linear-gradient(90deg,transparent,var(--violet),var(--cyan),transparent);opacity:.72;box-shadow:0 0 11px rgba(34,211,238,.3)}
+    .brand{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .brand-name{font-family:"Orbitron",Arial,sans-serif;font-size:43px;font-weight:900;font-style:italic;letter-spacing:-.035em;line-height:.95;white-space:nowrap;background:linear-gradient(105deg,#b45cff 0%,#7c3aed 33%,#4f7cff 62%,#22d3ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px rgba(124,58,237,.14))}
+    .register{margin-top:10px;display:flex;align-items:center;gap:11px;font-family:"Orbitron",Arial,sans-serif;font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#72e4ff;white-space:nowrap}
+    .register::before,.register::after{content:"";width:31px;height:1px;background:linear-gradient(90deg,transparent,var(--violet))}
+    .register::after{background:linear-gradient(90deg,var(--cyan),transparent)}
 
-    .panel {
-      position: relative;
-      height: 110px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(180deg, var(--bg1), var(--bg2));
-      border-top: 2px solid rgba(255,255,255,0.05);
-      border-bottom: 2px solid rgba(255,255,255,0.04);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 -10px 30px rgba(0,0,0,0.22);
-      overflow: visible;
-    }
+    .logo{position:absolute;left:50%;top:-118px;transform:translateX(-50%);width:150px;height:150px;z-index:9;filter:drop-shadow(0 0 18px rgba(168,85,247,.42)) drop-shadow(0 0 14px rgba(34,211,238,.26))}
+    .logo::after{content:"";position:absolute;left:50%;bottom:0;transform:translate(-50%,46%);width:70px;height:20px;border-radius:50%;background:linear-gradient(90deg,var(--violet),var(--cyan));opacity:.38;filter:blur(10px);z-index:-1}
+    .logo svg{width:100%;height:100%;display:block}
 
-    .panel::before {
-      content: "";
-      position: absolute;
-      inset: 10px 18px;
-      opacity: 0.12;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
-    }
+    .live-card{width:min(100%,620px);height:92px;display:grid;grid-template-columns:11px 1fr;gap:18px;align-items:center;padding:13px 18px 13px 16px;border:1px solid rgba(255,255,255,.065);background:linear-gradient(180deg,rgba(255,255,255,.036),rgba(255,255,255,.012));clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.016)}
+    .live-accent{width:4px;height:60px;border-radius:99px;background:linear-gradient(180deg,var(--cyan),var(--blue));box-shadow:0 0 12px rgba(34,211,238,.55)}
+    .live-copy{min-width:0}
+    .live-title{font-family:"Orbitron",Arial,sans-serif;font-size:31px;font-weight:900;font-style:italic;letter-spacing:-.03em;line-height:1;white-space:nowrap;background:linear-gradient(100deg,#5e8cff,#22d3ee 78%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .live-subtitle{margin-top:8px;color:#47dcf6;font-size:15px;font-weight:700;line-height:1;white-space:nowrap}
+    .live-description{margin-top:6px;color:rgba(255,255,255,.74);font-size:12px;font-weight:500;line-height:1;white-space:nowrap}
 
-    .left {
-      border-left: 3px solid rgba(168,85,247,0.95);
-      border-top: 2px solid rgba(168,85,247,0.85);
-      clip-path: polygon(0 18px, calc(100% - 28px) 18px, calc(100% - 14px) 0, 100% 0, 100% 100%, 0 100%);
-      padding: 14px 16px 12px 20px;
-    }
+    .sweep{position:absolute;top:0;bottom:0;left:-14%;width:10%;z-index:7;transform:skewX(-24deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);animation:sweep 7s ease-in-out infinite;opacity:0}
+    @keyframes sweep{0%,18%{left:-14%;opacity:0}24%{opacity:.55}48%{left:106%;opacity:0}100%{left:106%;opacity:0}}
 
-    .center {
-      height: 126px;
-      z-index: 5;
-      border-top: 2px solid rgba(168,85,247,0.84);
-      border-left: 2px solid rgba(168,85,247,0.62);
-      border-right: 2px solid rgba(34,211,238,0.62);
-      border-bottom: 2px solid rgba(34,211,238,0.35);
-      clip-path: polygon(0 18px, 30px 18px, 44px 0, calc(100% - 44px) 0, calc(100% - 30px) 18px, 100% 18px, 100% 100%, 0 100%);
-      padding: 50px 16px 10px;
-      margin-top: -16px;
-    }
-
-    .right {
-      border-right: 3px solid rgba(34,211,238,0.95);
-      border-top: 2px solid rgba(34,211,238,0.84);
-      clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 0);
-      padding: 14px 20px 12px 16px;
-    }
-
-    .edge-left, .edge-right {
-      position: absolute;
-      bottom: 0;
-      height: 110px;
-      width: 42px;
-      background: linear-gradient(180deg, var(--bg1), var(--bg2));
-      z-index: 3;
-    }
-
-    .edge-left {
-      left: 0;
-      border-top: 2px solid rgba(168,85,247,0.85);
-      border-left: 3px solid rgba(168,85,247,0.95);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
-    }
-
-    .edge-right {
-      right: 0;
-      border-top: 2px solid rgba(34,211,238,0.85);
-      border-right: 3px solid rgba(34,211,238,0.95);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
-    }
-
-    .logo-holder {
-      position: absolute;
-      left: 50%;
-      bottom: 106px;
-      transform: translateX(-50%);
-      width: 134px;
-      height: 134px;
-      z-index: 7;
-      display: grid;
-      place-items: center;
-      filter: drop-shadow(0 0 18px rgba(168,85,247,0.44)) drop-shadow(0 0 12px rgba(34,211,238,0.28));
-    }
-
-    .logo-holder::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: -10px;
-      transform: translateX(-50%);
-      width: 70px;
-      height: 16px;
-      background: linear-gradient(90deg, rgba(168,85,247,0.9), rgba(34,211,238,0.9));
-      filter: blur(10px);
-      opacity: 0.45;
-    }
-
-    .logo-svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .socials {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      align-items: center;
-      text-align: center;
-      gap: 0;
-    }
-
-    .social {
-      padding: 0 8px;
-      border-right: 1px solid rgba(168,85,247,0.55);
-    }
-
-    .social:last-child { border-right: 0; }
-
-    .social svg {
-      width: 28px;
-      height: 28px;
-      display: block;
-      margin: 0 auto 6px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.1;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      filter: drop-shadow(0 0 6px currentColor);
-    }
-
-    .instagram { color: #b45cff; }
-    .youtube { color: #a855f7; }
-    .whatsapp { color: #21d4f5; }
-
-    .social-label {
-      font-size: 12px;
-      line-height: 1;
-      margin-bottom: 4px;
-      color: #fff;
-      font-weight: 500;
-    }
-
-    .social-value {
-      font-size: 11px;
-      line-height: 1.1;
-      color: #f7f8ff;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .brand-stack, .match-stack {
-      position: relative;
-      z-index: 6;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .brand-name {
-      font-family: "Orbitron", Arial, sans-serif;
-      font-weight: 900;
-      font-style: italic;
-      font-size: 32px;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-      background: linear-gradient(105deg, #b45cff 0%, #7c3aed 34%, #4d7cff 60%, #22d3ee 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .register-line {
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: "Orbitron", Arial, sans-serif;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      color: #63dbff;
-      white-space: nowrap;
-      text-transform: uppercase;
-    }
-
-    .register-line::before, .register-line::after {
-      content: "";
-      width: 28px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--violet));
-      box-shadow: 0 0 8px rgba(168,85,247,0.45);
-    }
-
-    .register-line::after {
-      background: linear-gradient(90deg, var(--cyan), transparent);
-      box-shadow: 0 0 8px rgba(34,211,238,0.45);
-    }
-
-    .live-title {
-      font-family: "Orbitron", Arial, sans-serif;
-      font-weight: 900;
-      font-style: italic;
-      font-size: 28px;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-      background: linear-gradient(100deg, #4e7dff, #22d3ee 76%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .match-subtitle {
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #35d8f5;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1;
-      white-space: nowrap;
-    }
-
-    .match-subtitle::before, .match-subtitle::after {
-      content: "";
-      width: 28px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--cyan));
-      box-shadow: 0 0 8px rgba(34,211,238,0.45);
-    }
-
-    .match-subtitle::after {
-      background: linear-gradient(90deg, var(--cyan), transparent);
-    }
-
-    .match-description {
-      margin-top: 7px;
-      color: rgba(255,255,255,0.90);
-      font-size: 10px;
-      line-height: 1;
-      white-space: nowrap;
-      font-weight: 500;
-    }
-
-    @media (min-width: 1600px) {
-      .overlay { height: 290px; }
-      .beam { bottom: 208px; }
-      .panel { height: 128px; }
-      .center { height: 144px; padding-top: 58px; }
-      .edge-left, .edge-right { height: 128px; width: 52px; }
-      .logo-holder { width: 152px; height: 152px; bottom: 122px; }
-      .social svg { width: 34px; height: 34px; margin-bottom: 8px; }
-      .social-label { font-size: 14px; }
-      .social-value { font-size: 13px; }
-      .brand-name { font-size: 42px; }
-      .register-line { font-size: 12px; }
-      .live-title { font-size: 36px; }
-      .match-subtitle { font-size: 15px; }
-      .match-description { font-size: 12px; }
+    @media(max-width:1280px){
+      .rail{height:122px}.left-section{padding:14px 18px 12px 20px}.right-section{padding:14px 20px 12px 18px}.socials{gap:7px}.social{height:64px;grid-template-columns:32px 1fr;column-gap:8px;padding:7px 8px}.social-icon{width:30px;height:30px;border-radius:9px}.social svg{width:18px;height:18px}.social-label{font-size:9px;margin-bottom:4px}.social-value{font-size:10px}.center-plinth{top:-24px;clip-path:polygon(28px 24px,56px 24px,70px 0,calc(100% - 70px) 0,calc(100% - 56px) 24px,calc(100% - 28px) 24px,100% 50px,100% 100%,0 100%,0 50px)}.logo{width:116px;height:116px;top:-91px}.brand-name{font-size:31px}.register{font-size:8px;margin-top:7px;gap:7px}.register::before,.register::after{width:20px}.live-card{height:70px;padding:9px 11px;grid-template-columns:7px 1fr;gap:10px}.live-accent{height:44px;width:3px}.live-title{font-size:22px}.live-subtitle{font-size:11px;margin-top:5px}.live-description{font-size:9px;margin-top:4px}
     }
   </style>
 </head>
 <body>
-  <main class="stage">
-    <div class="beam"></div>
-    <div class="edge-left"></div>
-    <div class="edge-right"></div>
+  <main class="stage" aria-label="Veerzone premium StreamChamp overlay">
+    <div class="ambient"></div>
 
-    <div class="logo-holder" aria-hidden="true">
-      <svg class="logo-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="vzOuter" x1="48" y1="35" x2="278" y2="284" gradientUnits="userSpaceOnUse">
             <stop stop-color="#b44cff" />
@@ -371,52 +103,39 @@
         <path d="M160 19L281 88V226L160 301L39 226V88L160 19Z" fill="#070b18" stroke="url(#vzOuter)" stroke-width="10" filter="url(#vzGlow)" />
         <path d="M82 99H118L160 188L202 99H238L160 267L82 99Z" fill="url(#vzFill)" stroke="#9bdfff" stroke-opacity=".18" stroke-width="3" />
         <path d="M160 55L177 83L160 112L143 83L160 55Z" fill="#22d3ee" stroke="#b9f5ff" stroke-width="3" />
+        <path d="M112 111L160 210L208 111" stroke="rgba(255,255,255,.34)" stroke-width="3" />
       </svg>
     </div>
 
-    <section class="overlay" aria-label="Veerzone full width bottom overlay">
-      <article class="panel left">
+    <section class="rail">
+      <div class="sweep"></div>
+
+      <article class="section left-section">
         <div class="socials">
           <div class="social instagram">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-              <circle cx="12" cy="12" r="4"></circle>
-              <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"></circle>
-            </svg>
-            <div class="social-label">Instagram</div>
-            <div class="social-value">@veerzone_battles</div>
+            <div class="social-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"></circle></svg></div>
+            <div class="social-copy"><div class="social-label">Instagram</div><div class="social-value">@veerzone_battles</div></div>
           </div>
           <div class="social youtube">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect>
-              <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path>
-            </svg>
-            <div class="social-label">YouTube</div>
-            <div class="social-value">@veerzone_official</div>
+            <div class="social-icon"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"></path></svg></div>
+            <div class="social-copy"><div class="social-label">YouTube</div><div class="social-value">@veerzone_official</div></div>
           </div>
           <div class="social whatsapp">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3 20.5l1.4-4.7A8.5 8.5 0 1 1 20.5 11.6z"></path>
-              <path d="M8.6 7.9c.3-.6.7-.6 1-.6h.4c.2 0 .5.1.6.5l.8 2c.1.3.1.6-.1.8l-.8 1c-.2.2-.1.5.1.8.5.9 1.3 1.7 2.3 2.2.3.2.6.2.8 0l1-.9c.2-.2.5-.2.8-.1l2 .9c.3.2.5.4.5.7 0 .4-.2 1.4-.8 2-.6.7-1.5 1-2.5.8-1.3-.2-2.9-.8-4.8-2.5-1.5-1.4-2.7-3-3.1-4.3-.5-1.5.1-2.6.8-3.3z"></path>
-            </svg>
-            <div class="social-label">WhatsApp</div>
-            <div class="social-value">9014122762</div>
+            <div class="social-icon"><svg viewBox="0 0 24 24"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3 20.5l1.4-4.7A8.5 8.5 0 1 1 20.5 11.6z"></path><path d="M8.6 7.9c.3-.6.7-.6 1-.6h.4c.2 0 .5.1.6.5l.8 2c.1.3.1.6-.1.8l-.8 1c-.2.2-.1.5.1.8.5.9 1.3 1.7 2.3 2.2.3.2.6.2.8 0l1-.9c.2-.2.5-.2.8-.1l2 .9c.3.2.5.4.5.7 0 .4-.2 1.4-.8 2-.6.7-1.5 1-2.5.8-1.3-.2-2.9-.8-4.8-2.5-1.5-1.4-2.7-3-3.1-4.3-.5-1.5.1-2.6.8-3.3z"></path></svg></div>
+            <div class="social-copy"><div class="social-label">WhatsApp</div><div class="social-value">9014122762</div></div>
           </div>
         </div>
       </article>
 
-      <article class="panel center">
-        <div class="brand-stack">
-          <div class="brand-name">VEERZONE</div>
-          <div class="register-line">REGISTER IN VEERZONE.COM</div>
-        </div>
+      <article class="section center-section">
+        <div class="center-plinth"></div>
+        <div class="brand"><div class="brand-name">VEERZONE</div><div class="register">REGISTER IN VEERZONE.COM</div></div>
       </article>
 
-      <article class="panel right">
-        <div class="match-stack">
-          <div class="live-title">LIVE MATCHES</div>
-          <div class="match-subtitle">Classic's and TDM's</div>
-          <div class="match-description">Daily TDM's and Weekly Classics</div>
+      <article class="section right-section">
+        <div class="live-card">
+          <span class="live-accent"></span>
+          <div class="live-copy"><div class="live-title">LIVE MATCHES</div><div class="live-subtitle">Classic's and TDM's</div><div class="live-description">Daily TDM's and Weekly Classics</div></div>
         </div>
       </article>
     </section>
