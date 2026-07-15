@@ -3,183 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <title>Veerzone Animated Canva Overlay</title>
+  <title>Veerzone Canva Overlay</title>
   <style>
-    :root {
-      --violet: 123, 46, 255;
-      --cyan: 0, 240, 255;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
+    html, body {
       width: 100%;
       height: 100%;
       margin: 0;
       overflow: hidden;
-      background: transparent !important;
-    }
-
-    body {
-      pointer-events: none;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .stage {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
       background: transparent;
-      isolation: isolate;
     }
 
-    .overlay-image {
-      position: absolute;
-      inset: 0;
+    iframe {
       width: 100%;
       height: 100%;
+      border: 0;
       display: block;
-      object-fit: fill;
-      transform-origin: 50% 100%;
-      animation: overlayBreathe 4.6s ease-in-out infinite;
-      will-change: transform, filter;
-      backface-visibility: hidden;
-    }
-
-    .bottom-glow {
-      position: absolute;
-      left: 50%;
-      bottom: -4.5%;
-      width: 58%;
-      height: 23%;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 42% 54%, rgba(var(--violet), .18), transparent 44%),
-        radial-gradient(circle at 58% 54%, rgba(var(--cyan), .12), transparent 44%);
-      filter: blur(22px);
-      opacity: .46;
-      mix-blend-mode: screen;
-      animation: glowPulse 3.4s ease-in-out infinite;
-      z-index: -1;
-    }
-
-    .centre-pulse {
-      position: absolute;
-      left: 50%;
-      bottom: 1.5%;
-      width: 14%;
-      height: 18%;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(var(--violet), .22) 0%,
-        rgba(var(--cyan), .08) 42%,
-        transparent 72%
-      );
-      mix-blend-mode: screen;
-      animation: centrePulse 2.8s ease-in-out infinite;
-    }
-
-    .shimmer {
-      position: absolute;
-      left: -36%;
-      bottom: 0;
-      width: 24%;
-      height: 22%;
-      transform: skewX(-18deg);
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, .14),
-        transparent
-      );
-      filter: blur(2px);
-      opacity: 0;
-      mix-blend-mode: screen;
-      animation: bottomShimmer 6.4s ease-in-out infinite;
-    }
-
-    @keyframes overlayBreathe {
-      0%, 100% {
-        transform: translate3d(0, 0, 0) scale(1);
-        filter: brightness(1) drop-shadow(0 0 3px rgba(var(--violet), .12));
-      }
-      50% {
-        transform: translate3d(0, -1px, 0) scale(1.0015);
-        filter: brightness(1.06) drop-shadow(0 0 10px rgba(var(--violet), .25));
-      }
-    }
-
-    @keyframes glowPulse {
-      0%, 100% {
-        opacity: .36;
-        transform: translateX(-50%) scale(.96);
-      }
-      50% {
-        opacity: .62;
-        transform: translateX(-50%) scale(1.04);
-      }
-    }
-
-    @keyframes centrePulse {
-      0%, 100% {
-        opacity: .38;
-        transform: translateX(-50%) scale(.92);
-      }
-      50% {
-        opacity: .86;
-        transform: translateX(-50%) scale(1.08);
-      }
-    }
-
-    @keyframes bottomShimmer {
-      0%, 18% {
-        left: -36%;
-        opacity: 0;
-      }
-      28% {
-        opacity: .58;
-      }
-      58% {
-        left: 112%;
-        opacity: .28;
-      }
-      70%, 100% {
-        left: 112%;
-        opacity: 0;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .overlay-image,
-      .bottom-glow,
-      .centre-pulse,
-      .shimmer {
-        animation: none !important;
-      }
     }
   </style>
 </head>
 <body>
-  <main class="stage" aria-label="Veerzone animated livestream overlay">
-    <div class="bottom-glow"></div>
-    <img
-      class="overlay-image"
-      src="../veerzone-premium-overlay-v5.png"
-      alt=""
-      draggable="false"
-    />
-    <div class="centre-pulse"></div>
-    <div class="shimmer"></div>
-  </main>
+  <iframe
+    src="https://www.canva.com/design/DAHPe7QLP0Y/zOfzzJEKyNtPZv1NUBnGJg/watch"
+    allow="autoplay; fullscreen"
+    allowfullscreen
+  ></iframe>
 </body>
 </html>
